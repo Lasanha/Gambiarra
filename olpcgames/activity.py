@@ -12,14 +12,14 @@ import mesh
 __all__ = ['PyGameActivity']
 
 class PyGameActivity(activity.Activity):
-        
+
     game_name = None
     game_title = 'PyGame Game'
     game_handler = None
-    game_size = (16 * style.GRID_CELL_SIZE,
-                 11 * style.GRID_CELL_SIZE)
+    game_size = (16 * style.zoom(75),
+                 11 * style.zoom(75))
     pygame_mode = 'SDL'
-        
+
     def __init__(self, handle):
             super(PyGameActivity, self).__init__(handle)
             

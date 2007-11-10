@@ -8,5 +8,5 @@ import logging
 class GambiarraActivity(olpcgames.PyGameActivity):
 
     game_name = 'Gambiarra.gambiarra:main'
-    game_title("Gambiarra")
+    game_title = "Gambiarra"
     game_size = (1200, 900)

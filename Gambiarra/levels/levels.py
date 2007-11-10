@@ -13,7 +13,7 @@ class ObjectBar(object):
         self.background.fill([0,255,0])   #TODO: achar uma cor melhor =D
         self.objects = objects
 
-    def draw(self, pos=None):
+    def draw(self, pos = None):
         screen = pygame.display.get_surface()
         if pos:
             screen.blit(self.background, (pos[0], 700 + pos[1]), pos)
@@ -23,7 +23,7 @@ class ObjectBar(object):
         objpos = [0,715]
         for item in self.objects:
             item.draw(screen, objpos)
-            objpos[0] += item.width + 15
+            objpos[0] += item.img.get_width() + 15
             
 
     def update(self):
@@ -63,13 +63,13 @@ class Level(object):
 
 
 #Sample levels
-level1ObjInPlace = [ (BowlingBall(), 200, 300), (BeachBall(), 400, 800)]
+level1ObjInPlace = [ BowlingBall(200,300), BeachBall(400,800)]
 level1ObjToAdd = [ Penguin(), BeachBall() ]
 
-level2ObjInPlace = [ (Penguin(), 300, 600)]
+level2ObjInPlace = [ Penguin(300,600)]
 level2ObjToAdd = [ BeachBall(), Penguin(), BowlingBall() ]
 
-level3ObjInPlace = [ (BowlingBall(), 200, 700), (Penguin(), 500, 800)]
+level3ObjInPlace = [ BowlingBall(200,700), Penguin(500, 800)]
 level3ObjToAdd = [ Penguin(), BeachBall() ]
 
 level1 = Level( level1ObjInPlace, level1ObjToAdd )
