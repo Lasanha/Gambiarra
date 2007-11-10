@@ -1,7 +1,13 @@
 activity/activity-gambiarra.svg
 activity/activity.info
-gambiarra/__init__.py
-gambiarra/gambiarra.py
+Gambiarra/__init__.py
+Gambiarra/gambiarra.py
+Gambiarra/levels/__init__.py
+Gambiarra/levels/levels.py
+Gambiarra/gamemenu.py
+Gambiarra/objects/__init__.py
+Gambiarra/objects/balls.py
+Gambiarra/objects/animals.py
 olpcgames/activity.py
 olpcgames/camera.py
 olpcgames/canvas.py

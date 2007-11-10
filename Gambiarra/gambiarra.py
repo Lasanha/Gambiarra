@@ -11,6 +11,7 @@ class Game(object):
     screenSize = None
     run = None
     background = None
+    clock = None
     level = 0
     allLevels = [ Levels.level1, Levels.level2, Levels.level3 ]
 
@@ -25,6 +26,7 @@ class Game(object):
         pygame.display.flip()
         self.run = True
         pygame.display.set_caption("Gambiarra")
+        self.clock = pygame.time.Clock()
 
         #carregar imagens?
         #vai carregar tudo de uma vez ou on demand?
@@ -59,7 +61,7 @@ class Game(object):
         #loop principal
         
         while self.run:
-            
+            self.clock.tick(30)
             self.allLevels[self.level].draw()
             
             pygame.display.flip()

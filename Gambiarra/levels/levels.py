@@ -2,13 +2,16 @@
 #arquivo que contem a lista de fases
 
 import pygame
+from objects.balls import *
+from objects.animals import *
 
 class ObjectBar(object):
     """ This widget contains the objects available for the problem. """
 
-    def __init__(self):
+    def __init__(self, objects):
         self.background = pygame.Surface((1000, 200))
         self.background.fill([0,255,0])   #TODO: achar uma cor melhor =D
+        self.objects = objects
 
     def draw(self, pos=None):
         screen = pygame.display.get_surface()
@@ -16,6 +19,12 @@ class ObjectBar(object):
             screen.blit(self.background, (pos[0], 700 + pos[1]), pos)
         else:
             screen.blit(self.background, (0, 700))
+
+        objpos = [0,715]
+        for item in self.objects:
+            item.draw(screen, objpos)
+            objpos[0] += item.width + 15
+            
 
     def update(self):
         pass
@@ -43,9 +52,9 @@ class Level(object):
     on the screen"""
     objects = None
 
-    def __init__(self, objectList):
-        self.objects = objectList
-        self.objbar = ObjectBar()
+    def __init__(self, objInPlace, objToAdd):
+        self.objects = objInPlace
+        self.objbar = ObjectBar(objToAdd)
         self.cmdbar = CommandBar()
 
     def draw(self):
@@ -54,10 +63,15 @@ class Level(object):
 
 
 #Sample levels
-level1Objects = [ ("BowlingBall", 200, 300), ("BeachBall", 400, 800)]
-level2Objects = [ ("Penguin", 300, 600)]
-level3Objects = [ ("BowlingBall", 200, 700), ("Penguin", 500, 800)]
+level1ObjInPlace = [ (BowlingBall(), 200, 300), (BeachBall(), 400, 800)]
+level1ObjToAdd = [ Penguin(), BeachBall() ]
 
-level1 = Level( level1Objects )
-level2 = Level( level2Objects )
-level3 = Level( level3Objects )
+level2ObjInPlace = [ (Penguin(), 300, 600)]
+level2ObjToAdd = [ BeachBall(), Penguin(), BowlingBall() ]
+
+level3ObjInPlace = [ (BowlingBall(), 200, 700), (Penguin(), 500, 800)]
+level3ObjToAdd = [ Penguin(), BeachBall() ]
+
+level1 = Level( level1ObjInPlace, level1ObjToAdd )
+level2 = Level( level2ObjInPlace, level2ObjToAdd )
+level3 = Level( level3ObjInPlace, level3ObjToAdd )
