@@ -1,5 +1,24 @@
-# gambiarra/gambiarra.py
-#aqui fica o codigo do jogo em si
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+#
+# Copyright (C) 2007 by ULPM: Alexandre Yukio Harano
+#                             Fábio Cassarotti Parronchi Navarro
+#                             Gabriel Geraldo França Marcondes
+#                             Luiz Carlos Irber Júnior
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 import pygame
 from pygame.locals import *
@@ -9,6 +28,8 @@ from objects.elastica import Elastica
 from objects.esteira import Esteira
 from objects.target import Target
 from objects.wall import *
+from command import Play, Help, Quit
+from gamemenu import GameMenu
 
 def check_collision(sprite_list, wall_list):
     new_objects = pygame.sprite.RenderPlain()
@@ -27,7 +48,7 @@ def check_collision(sprite_list, wall_list):
                     if obj.rect.bottom > w.rect.top:
                        obj.rect.bottom = w.rect.top - 1
                        obj.speed[1] = -0.7*obj.speed[1]
-
+                #1. a**n + b**n = c**n ?
                 if isinstance(w, UpWall):
                     if obj.rect.top < w.rect.bottom:
                         obj.rect.top = w.rect.bottom + 1
@@ -63,28 +84,27 @@ def check_collision(sprite_list, wall_list):
 
 
 class Game(object):
-    fps = 5
+    fps = 30
     screen = None
-    screenSize = None
     playing = None
     run = None
     background = None
     clock = None
     level = 0
     levels = []
-    action = []
     selected_element = None
+    menu = None
 
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((1200,900)) #omitindo flags
-        self.screenSize = self.screen.get_size()
         pygame.display.flip()
         self.run = True
         self.playing = False
         pygame.display.set_caption("Gambiarra")
         self.clock = pygame.time.Clock()
         self.levels = Levels.init_levels()
+        self.menu = GameMenu()
 
         #inicia o loop
         self.main_loop()
@@ -111,16 +131,13 @@ class Game(object):
                     else:
                         obj.speed[0] = 20
                     obj.speed[1] += obj.gravity
-        elif self.action:
-            action = None
 
-    def start_window(self):
-        #desenha a tela inicial (abstrato -chama os outros metodos predefinidos)
-        pass
-        
-    def next_level(self):
-        pass
-        
+    def goal_reached(self):
+        reached = False
+        if self.levels[self.level].goal.rect.collidepoint(self.levels[self.level].toGoal.rect.center):
+            reached = True
+        return reached
+
     def mouse_event(self, mousePos):
         if not self.selected_element:
             collided = False
@@ -129,44 +146,68 @@ class Game(object):
             
             for element in self.levels[self.level].simulator.objects:
                 if element.rect.collidepoint(mousePos):
-                    print "COLIDIU PORRA", element
                     collided = True
                     self.selected_element = element
                     break
                     
-            if not self.selected_element: #se nao encontrou no for anterior
-                print "nao colidiu no simulador"
-                for element in self.levels[self.level].objbar.objects:
+            if not self.selected_element:
+                for element in self.levels[self.level].simulator.staticObjs:
                     if element.rect.collidepoint(mousePos):
-                        print "COLIDIU PORRA", element
                         collided = True
                         self.selected_element = element
                         break
+                    
+            if not self.selected_element: #se nao encontrou no for anterior
+                for element in self.levels[self.level].objbar.objects:
+                    if element.rect.collidepoint(mousePos):
+                        collided = True
+                        element.remove(self.levels[self.level].objbar.objects)
+                        self.levels[self.level].simulator.add(element)
+                        self.selected_element = element
+                        break
                         
-            """if not self.selected_element: #se nao encontrou no for anterior
+            if not self.selected_element: #se nao encontrou no for anterior
                 for element in self.levels[self.level].cmdbar.commands:
                     if element.rect.collidepoint(mousePos):
-                        print "COLIDIU PORRA", element
-                        collided = True
-                        self.selected_element = element
-                        break"""
-                
+                        if isinstance(element, Play):
+                            element.image = pygame.transform.flip(element.image,
+                                                                  True, False)
+                            self.playing = not self.playing
+                            if not self.playing:
+                                for element in self.levels[self.level].simulator.objects:
+                                    element.speed = [0,0]
+                                    element.rect.topleft = element.initialPosition
+
+                        elif isinstance(element, Help):
+                            #TODO: como mostrar a ajuda?
+                            pass
+                        elif isinstance(element, Quit):
+                            self.run = False
+                        break
         else:
             mouseMove = pygame.mouse.get_rel()
-            self.selected_element.rect = self.selected_element.rect.move(mouseMove)
+            if self.selected_element.editable:
+                self.selected_element.rect = self.selected_element.rect.move(mouseMove)
+                self.selected_element.initialPosition = self.selected_element.rect.topleft
             self.selected_element = None
 
 
     def main_loop(self):
-        #quando clicar em play transformar o botao em stop
+        self.menu.run()
         while self.run:
-            self.event_handler()
-            self.clock.tick(self.fps)
-            self.update_screen(self.fps)
-            self.levels[self.level].draw()
+            goal = self.goal_reached()
+            while not goal:
+                self.event_handler()
+                self.clock.tick(self.fps)
+                self.update_screen(self.fps)
+                self.levels[self.level].draw()
 
-            pygame.display.flip()
+                pygame.display.flip()
 
+                goal = self.goal_reached()
+            self.playing = False
+            goal = False
+            self.level += 1
 
 def main():
     game = Game()
