@@ -29,20 +29,20 @@ class BowlingBall(Thing):
     def __init__(self, initialPosition=None, editable=True):
         super(BowlingBall, self).__init__(
          pygame.image.load(abspath("../data/images/bolaBoliche.png")),
-         editable, initialPosition, elasticity = 100, mobility = True,
-         gravity = 10)
-        self.snd = pygame.mixer.Sound(abspath("../data/snd/BowlingBall.wav"))
+         editable, pygame.mixer.Sound(abspath("../data/snd/BowlingBall.wav")),
+         initialPosition, elasticity = 60, mobility = True, gravity = 5)
 
 class BeachBall(Thing):
     def __init__(self, initialPosition=None, editable=True):
         super(BeachBall, self).__init__(
               pygame.image.load(abspath("../data/images/bola.png")),
-              editable, initialPosition, elasticity = 100, mobility = True,
-              gravity = 10)
+              editable, pygame.mixer.Sound(abspath("../data/snd/BowlingBall.wav")),
+              initialPosition, elasticity = 90, mobility = True, gravity = 5)
 
 class SoccerBall(Thing):
     def __init__(self, initialPosition=None, editable=True):
         super(SoccerBall, self).__init__(
               pygame.image.load(abspath("../data/images/futebol.png")),
-              editable, initialPosition, elasticity = 100, mobility = True,
-              gravity = 10)
+              editable, pygame.mixer.Sound(abspath("../data/snd/BowlingBall.wav")),
+              initialPosition, elasticity = 70, mobility = True,
+              gravity = 5)

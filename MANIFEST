@@ -34,7 +34,10 @@ data/images/target.png
 data/images/upwall.png
 
 data/snd/BowlingBall.wav
+data/snd/cama_elastica.wav
 data/snd/Congrats.wav
+data/snd/dummy.wav
+data/snd/penguin.wav
 
 Gambiarra/__init__.py
 Gambiarra/gambiarra.py

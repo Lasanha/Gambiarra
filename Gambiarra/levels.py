@@ -181,11 +181,28 @@ def init_levels():
 
     level4ObjInPlace = [ BowlingBall((20,20), editable=False), 
                          SoccerBall((800, 300),editable=False),
-                         Target((1100, 20), editable=False)]
+                         Target((900, 90), editable=False)]
     level4ObjToAdd = [ Esteira(), Esteira()]
     level4Goal = level4ObjInPlace[-1]
     level4ToGoal = level4ObjInPlace[0]
     level4HelpImage = pygame.image.load("../data/images/obj-level3.png")
+
+    level5ObjInPlace = [ BowlingBall((1000,300), editable=False),
+                         Esteira((1000,500), editable=False),
+                         Target((1100, 650), editable=False)]
+    level5ObjToAdd = [ Esteira(), Esteira()]
+    level5Goal = level5ObjInPlace[-1]
+    level5ToGoal = level5ObjInPlace[0]
+    level5HelpImage = pygame.image.load("../data/images/obj-level3.png")
+
+    level6ObjInPlace = [ BeachBall((800,50),editable = False),
+                         Elastica((800,400),editable = False),
+                         Elastica((900,200),editable = False),
+                         Target((1070,650),editable = False)]
+    level6ObjToAdd = [ Esteira(), Esteira() ]
+    level6Goal = level6ObjInPlace[-1]
+    level6ToGoal = level6ObjInPlace[0]
+    level6HelpImage = pygame.image.load("../data/images/obj-level3.png")
 
     level1 = Level( level1ObjInPlace, level1ObjToAdd, level1Goal,
                     level1ToGoal, level1HelpImage)
@@ -195,5 +212,9 @@ def init_levels():
                     level3ToGoal, level3HelpImage)
     level4 = Level( level4ObjInPlace, level4ObjToAdd, level4Goal,
                     level4ToGoal, level4HelpImage)
+    level5 = Level( level5ObjInPlace, level5ObjToAdd, level5Goal,
+                    level5ToGoal, level5HelpImage)
+    level6 = Level( level6ObjInPlace, level6ObjToAdd, level6Goal,
+                    level6ToGoal, level6HelpImage)
 
-    return [level1, level2, level3, level4]
+    return [level1, level2, level3, level4, level5, level6]

@@ -32,7 +32,8 @@ class Esteira(Thing):
     def __init__(self, initialPosition = [0,0], editable=True):
         super(Esteira, self).__init__(
               pygame.image.load(abspath("../data/images/esteira_dir.png")),
-              editable, initialPosition, elasticity = 100, mobility = False,
+              editable, pygame.mixer.Sound(abspath("../data/snd/dummy.wav")),
+              initialPosition, elasticity = 100, mobility = False,
               gravity = 10)
         self.sentido = 1
         self.image_dir = pygame.image.load(

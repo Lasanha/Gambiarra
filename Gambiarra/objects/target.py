@@ -29,5 +29,6 @@ class Target(Thing):
     def __init__(self, initialPosition = [0,0], editable=True):
         super(Target, self).__init__(
               pygame.image.load(abspath("../data/images/target.png")),
-              editable, initialPosition, elasticity = 100, mobility = False,
+              editable, pygame.mixer.Sound(abspath("../data/snd/dummy.wav")),
+              initialPosition, elasticity = 100, mobility = False,
               gravity = 10)

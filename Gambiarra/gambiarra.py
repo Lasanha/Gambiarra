@@ -41,7 +41,7 @@ def check_collision(sprite_list, wall_list):
         obj.add(new_objects)
 
         for s in sprite_list:
-            hitbox = obj.rect.inflate(5,5)
+            """hitbox = obj.rect.inflate(5,5)
             if hitbox.colliderect(s.rect):
                 if obj.rect.left < s.rect.right:
                     aux = obj.speed[0]
@@ -51,66 +51,86 @@ def check_collision(sprite_list, wall_list):
                 if obj.rect.left > s.rect.right :
                     aux = obj.speed[0]
                     obj.speed[0]=s.speed[0]
-                    s.speed[0]=aux                     
+                    s.speed[0]=aux
                     obj.rect.right = srect.left-1
                 if obj.rect.bottom > s.rect.top:
                     aux = obj.speed[1]
                     obj.speed[1]=s.speed[1]
-                    s.speed[1]=aux                    
+                    s.speed[1]=aux
                     obj.rect.bottom = s.rect.top-1
                 if obj.rect.top < s.rect.bottom:
                     aux = obj.speed[1]
                     obj.speed[1]=s.speed[1]
-                    s.speed[1]=aux                    
+                    s.speed[1]=aux
                     obj.rect.top = s.rect.bottom+1
-
+            """
             #TODO: verifica colisao de objetos dinamicos
             pass
 
         for w in wall_list:
-            hitbox = obj.rect.inflate(5,5)
-            if hitbox.colliderect(w.rect):
+#            hitbox = obj.rect.inflate(-5,-5)
+#            if hitbox.colliderect(w.rect):
+            if obj.rect.colliderect(w.rect):
+                obj.play()
+                w.play()
                 if isinstance(w, DownWall):
                     if obj.rect.bottom > w.rect.top:
-                       obj.rect.bottom = w.rect.top - 1
+                       obj.rect.bottom = w.rect.top - 5
                        if isinstance(obj,Penguin):
                             obj.speed[1] = 0
                        else:
-                            obj.speed[1] = -0.7*obj.speed[1]
+                            obj.speed[1] *= -0.75*obj.elasticity/100
                 #1. a**n + b**n = c**n ?
                 if isinstance(w, UpWall):
-                    if obj.rect.top < w.rect.bottom:
-                        obj.rect.top = w.rect.bottom + 1
-                        obj.speed[1] = -0.7*obj.speed[1]
-
+                    if obj.rect.top <= w.rect.bottom:
+                        obj.rect.top = w.rect.bottom + 5
+                        obj.speed[1] *= -0.95*obj.elasticity/100
+                
                 if isinstance(w, LeftWall):
-                    if obj.rect.left < w.rect.right:
-                        obj.rect.left = w.rect.right + 1
-                        obj.speed[0] = -0.9*obj.speed[1]
+                    if obj.rect.left <= w.rect.right:
+                        obj.rect.left = w.rect.right + 5
+                        obj.speed[0] *= -0.95*obj.elasticity/100
 
                 if isinstance(w, RightWall):
-                    if obj.rect.right > w.rect.left:
-                        obj.rect.right = w.rect.left - 1
-                        obj.speed[0] = -0.9*obj.speed[1]
+                    if obj.rect.right >= w.rect.left:
+                        obj.rect.right = w.rect.left - 5
+                        obj.speed[0] *= -0.95*obj.elasticity/100
 
                 if isinstance(w, Esteira):
-                     if (obj.rect.midbottom > w.rect.top and
-                          obj.rect.bottom < w.rect.bottom):
-                        obj.rect.bottom = w.rect.top
+                     if (obj.rect.bottom >= w.rect.top and obj.speed[1] > 0):
+                        obj.rect.bottom = w.rect.top - 5
                         obj.speed[0] = w.sentido*15
                         if isinstance(obj,Penguin):
                              obj.speed[1] = 0
                         else:
-                             obj.speed[1] = -0.7*obj.speed[1]
+                             obj.speed[1] *= -0.75*obj.elasticity/100
                         
                 if isinstance(w, Elastica):
-                     if (obj.rect.midbottom > w.rect.top and
-                          obj.rect.bottom < w.rect.bottom):
-                        obj.rect.bottom = w.rect.top
-                     obj.speed[1] *= -1.07
+                     if (obj.rect.bottom >= w.rect.top and obj.speed[1] > 0):
+                        obj.rect.bottom = w.rect.top - 1
+                     elif (obj.rect.top <= w.rect.bottom):
+                        obj.rect.top = w.rect.bottom + 1
+                     obj.speed[1] *= -0.99
 
                 if isinstance(w, Target):
-                    pass 
+                    pass
+
+            if isinstance(w,DownWall) :
+                if obj.rect.bottom >= w.rect.top:
+                    obj.rect.bottom = w.rect.top - 5
+                    obj.speed[1] *= -0.75*obj.elasticity/100
+            if isinstance(w,UpWall) :
+                if obj.rect.top <= w.rect.bottom:
+                    obj.rect.top = w.rect.bottom + 5
+                    obj.speed[1] *= -0.95*obj.elasticity/100
+            if isinstance(w,LeftWall) :
+                if obj.rect.left <= w.rect.right:
+                    obj.rect.left = w.rect.right + 5
+                    obj.speed[0] *= -0.95*obj.elasticity/100
+            if isinstance(w,RightWall) :
+                if obj.rect.right >= w.rect.left:
+                    obj.rect.right = w.rect.left - 5
+                    obj.speed[0] *= -0.95*obj.elasticity/100
 
     return new_objects
 
@@ -168,7 +188,10 @@ class Game(object):
                 if obj.mobility:
                     newpos = obj.rect.move((obj.speed[0],obj.speed[1]))
                     obj.rect = newpos
-                    obj.speed[0] *= 0.99
+                    if not(isinstance(obj,Penguin)):
+                        obj.speed[0] *= 0.99
+                    if obj.speed[1] <= obj.rect[3]*0.04 and obj.speed[1] > 0:
+                        obj.speed[1] = 0
                     obj.speed[1] += obj.gravity
         else:
             if self.selected_element:
@@ -246,6 +269,7 @@ class Game(object):
             self.selected_element = None
 
     def show_congratulations(self):
+        pygame.mixer.stop()
         self.congratsSnd.play()
         self.screen.blit(self.congrats, (600 - self.congrats.get_width()/2,
                                          450 - self.congrats.get_height()/2) )

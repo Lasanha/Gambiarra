@@ -29,6 +29,7 @@ class Penguin(Thing):
     def __init__(self, initialPosition=None, editable=True):
         super(Penguin, self).__init__(
              pygame.image.load(abspath("../data/images/penguin.png")),
-             editable, initialPosition, elasticity = 100, mobility = True,
-             gravity = 1)
+             editable, pygame.mixer.Sound(abspath("../data/snd/penguin.wav")),
+             initialPosition, elasticity = 100, mobility = True,
+             gravity = 5)
         self.speed=[5,0]
