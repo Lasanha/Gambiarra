@@ -11,6 +11,8 @@ data/downwall.png
 data/leftwall.png
 data/rightwall.png
 data/upwall.png
+data/esteira.png
+data/target.png
 Gambiarra/__init__.py
 Gambiarra/gambiarra.py
 Gambiarra/levels/__init__.py
@@ -22,6 +24,7 @@ Gambiarra/objects/balls.py
 Gambiarra/objects/wall.py
 Gambiarra/objects/things.py
 Gambiarra/objects/esteira.py
+Gambiarra/objects/target.py
 olpcgames/activity.py
 olpcgames/camera.py
 olpcgames/canvas.py

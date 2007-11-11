@@ -1,4 +1,4 @@
-# /gambiarra/objects/things.py
+# gambiarra/objects/things.py
 # classe mais abstrata para "coisas" na tela
 
 import pygame

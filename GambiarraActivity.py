@@ -1,4 +1,4 @@
-# /GambiarraActivity.py
+# GambiarraActivity.py
 #Aqui vai o codigo de inicializacao da atividade
 
 import olpcgames

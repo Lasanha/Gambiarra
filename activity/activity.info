@@ -4,4 +4,4 @@ activity_version = 1
 host_version = 1
 service_name = org.laptop.Gambiarra
 icon = activity-gambiarra
-class = Gambiarra.activity.GambiarraActivity
+class = GambiarraActivity.GambiarraActivity
