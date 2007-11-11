@@ -19,6 +19,9 @@ data/images/leftwall.png
 data/images/next.png
 data/images/nivel_hover.png
 data/images/nivel_normal.png
+data/images/obj-level1.png
+data/images/obj-level2.png
+data/images/obj-level3.png
 data/images/penguin.png
 data/images/pen.png
 data/images/playButton.png
@@ -31,6 +34,7 @@ data/images/target.png
 data/images/upwall.png
 
 data/snd/BowlingBall.wav
+data/snd/Congrats.wav
 
 Gambiarra/__init__.py
 Gambiarra/gambiarra.py

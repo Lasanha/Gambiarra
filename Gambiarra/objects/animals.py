@@ -31,3 +31,4 @@ class Penguin(Thing):
              pygame.image.load(abspath("../data/images/penguin.png")),
              editable, initialPosition, elasticity = 100, mobility = True,
              gravity = 1)
+        self.speed=[5,0]

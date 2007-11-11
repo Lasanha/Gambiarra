@@ -23,7 +23,10 @@
 import pygame
 from pygame.locals import *
 import os
+import sys
+from os.path import abspath
 import levels as Levels
+from objects.animals import *
 from objects.elastica import Elastica
 from objects.esteira import Esteira
 from objects.target import Target
@@ -38,6 +41,29 @@ def check_collision(sprite_list, wall_list):
         obj.add(new_objects)
 
         for s in sprite_list:
+            hitbox = obj.rect.inflate(5,5)
+            if hitbox.colliderect(s.rect):
+                if obj.rect.left < s.rect.right:
+                    aux = obj.speed[0]
+                    obj.speed[0]=s.speed[0]
+                    s.speed[0]=aux
+                    obj.rect.left = s.rect.right-1
+                if obj.rect.left > s.rect.right :
+                    aux = obj.speed[0]
+                    obj.speed[0]=s.speed[0]
+                    s.speed[0]=aux                     
+                    obj.rect.right = srect.left-1
+                if obj.rect.bottom > s.rect.top:
+                    aux = obj.speed[1]
+                    obj.speed[1]=s.speed[1]
+                    s.speed[1]=aux                    
+                    obj.rect.bottom = s.rect.top-1
+                if obj.rect.top < s.rect.bottom:
+                    aux = obj.speed[1]
+                    obj.speed[1]=s.speed[1]
+                    s.speed[1]=aux                    
+                    obj.rect.top = s.rect.bottom+1
+
             #TODO: verifica colisao de objetos dinamicos
             pass
 
@@ -47,7 +73,10 @@ def check_collision(sprite_list, wall_list):
                 if isinstance(w, DownWall):
                     if obj.rect.bottom > w.rect.top:
                        obj.rect.bottom = w.rect.top - 1
-                       obj.speed[1] = -0.7*obj.speed[1]
+                       if isinstance(obj,Penguin):
+                            obj.speed[1] = 0
+                       else:
+                            obj.speed[1] = -0.7*obj.speed[1]
                 #1. a**n + b**n = c**n ?
                 if isinstance(w, UpWall):
                     if obj.rect.top < w.rect.bottom:
@@ -68,8 +97,11 @@ def check_collision(sprite_list, wall_list):
                      if (obj.rect.midbottom > w.rect.top and
                           obj.rect.bottom < w.rect.bottom):
                         obj.rect.bottom = w.rect.top
-                        obj.speed[0] += w.sentido*3
-                        obj.speed[1] = 0
+                        obj.speed[0] = w.sentido*15
+                        if isinstance(obj,Penguin):
+                             obj.speed[1] = 0
+                        else:
+                             obj.speed[1] = -0.7*obj.speed[1]
                         
                 if isinstance(w, Elastica):
                      if (obj.rect.midbottom > w.rect.top and
@@ -94,9 +126,14 @@ class Game(object):
     levels = []
     selected_element = None
     menu = None
+    congrats = None
+    congratsSnd = None
+    _showed_help = None
+    count = None
 
     def __init__(self):
         pygame.init()
+        pygame.mixer.init()
         self.screen = pygame.display.set_mode((1200,900)) #omitindo flags
         pygame.display.flip()
         self.run = True
@@ -105,6 +142,10 @@ class Game(object):
         self.clock = pygame.time.Clock()
         self.levels = Levels.init_levels()
         self.menu = GameMenu()
+        self.congrats = pygame.image.load("../data/images/fim_fase.png")
+        self.congratsSnd = pygame.mixer.Sound(abspath("../data/snd/Congrats.wav"))
+        self._showed_help = False
+        self.count = 0
 
         #inicia o loop
         self.main_loop()
@@ -117,6 +158,7 @@ class Game(object):
     def update_screen(self, fps):
         #update dos elementos da tela
         if self.playing:
+            
             # executa a simulacao
             objs = check_collision(self.levels[self.level].simulator.objects,
                                 self.levels[self.level].simulator.staticObjs)
@@ -126,16 +168,20 @@ class Game(object):
                 if obj.mobility:
                     newpos = obj.rect.move((obj.speed[0],obj.speed[1]))
                     obj.rect = newpos
-                    if obj.speed[0]:
-                        obj.speed[0] *= 0.99
-                    else:
-                        obj.speed[0] = 20
+                    obj.speed[0] *= 0.99
                     obj.speed[1] += obj.gravity
+        else:
+            if self.selected_element:
+                if self.selected_element.editable:
+                    self.selected_element.rect.center = pygame.mouse.get_pos()
+                
 
     def goal_reached(self):
         reached = False
-        if self.levels[self.level].goal.rect.collidepoint(self.levels[self.level].toGoal.rect.center):
-            reached = True
+        if self.level < len(self.levels):
+            if self.levels[self.level].goal.rect.collidepoint(
+                                   self.levels[self.level].toGoal.rect.center):
+                reached = True
         return reached
 
     def mouse_event(self, mousePos):
@@ -143,7 +189,7 @@ class Game(object):
             collided = False
             mouseMove = (0,0)
             mouseMove = pygame.mouse.get_rel()
-            
+
             for element in self.levels[self.level].simulator.objects:
                 if element.rect.collidepoint(mousePos):
                     collided = True
@@ -155,8 +201,14 @@ class Game(object):
                     if element.rect.collidepoint(mousePos):
                         collided = True
                         self.selected_element = element
+                        
+                        if isinstance(element,Esteira) and element.editable:
+                            self.count += 1
+                        if self.count == 1:
+                            element.sentido=-element.sentido
+                            self.count = 0        
                         break
-                    
+
             if not self.selected_element: #se nao encontrou no for anterior
                 for element in self.levels[self.level].objbar.objects:
                     if element.rect.collidepoint(mousePos):
@@ -165,7 +217,7 @@ class Game(object):
                         self.levels[self.level].simulator.add(element)
                         self.selected_element = element
                         break
-                        
+
             if not self.selected_element: #se nao encontrou no for anterior
                 for element in self.levels[self.level].cmdbar.commands:
                     if element.rect.collidepoint(mousePos):
@@ -177,37 +229,57 @@ class Game(object):
                                 for element in self.levels[self.level].simulator.objects:
                                     element.speed = [0,0]
                                     element.rect.topleft = element.initialPosition
-
                         elif isinstance(element, Help):
-                            #TODO: como mostrar a ajuda?
-                            pass
+                            self.levels[self.level].show_help(self.screen)
                         elif isinstance(element, Quit):
-                            self.run = False
+                            sys.exit()
                         break
+
         else:
-            mouseMove = pygame.mouse.get_rel()
-            if self.selected_element.editable:
-                self.selected_element.rect = self.selected_element.rect.move(mouseMove)
+            if self.selected_element.editable and not self.playing:
+                mouseMove = pygame.mouse.get_rel()
+                if mouseMove != (0,0):
+                    self.count -= 1
+                self.selected_element.rect.center = pygame.mouse.get_pos()
+                #self.selected_element.rect = self.selected_element.rect.move(mouseMove)
                 self.selected_element.initialPosition = self.selected_element.rect.topleft
             self.selected_element = None
 
+    def show_congratulations(self):
+        self.congratsSnd.play()
+        self.screen.blit(self.congrats, (600 - self.congrats.get_width()/2,
+                                         450 - self.congrats.get_height()/2) )
+        pygame.display.flip()
+        while True:
+            for event in pygame.event.get():
+                if event.type == MOUSEBUTTONDOWN:
+                    return
 
     def main_loop(self):
         self.menu.run()
         while self.run:
             goal = self.goal_reached()
-            while not goal:
+            while (not goal and
+                   self.level < len(self.levels)):
                 self.event_handler()
                 self.clock.tick(self.fps)
                 self.update_screen(self.fps)
                 self.levels[self.level].draw()
 
+                if not self._showed_help:
+                    self.levels[self.level].show_help(self.screen)
+                    self._showed_help = True
+
                 pygame.display.flip()
 
                 goal = self.goal_reached()
             self.playing = False
+            self._showed_help = False
             goal = False
             self.level += 1
+            self.show_congratulations()
+            if (len(self.levels) == self.level) :
+                self.run = False
 
 def main():
     game = Game()

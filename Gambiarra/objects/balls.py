@@ -31,6 +31,7 @@ class BowlingBall(Thing):
          pygame.image.load(abspath("../data/images/bolaBoliche.png")),
          editable, initialPosition, elasticity = 100, mobility = True,
          gravity = 10)
+        self.snd = pygame.mixer.Sound(abspath("../data/snd/BowlingBall.wav"))
 
 class BeachBall(Thing):
     def __init__(self, initialPosition=None, editable=True):

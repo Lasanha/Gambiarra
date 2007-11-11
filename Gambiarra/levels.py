@@ -20,6 +20,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 import pygame
+from pygame.locals import *
 from objects.balls import *
 from objects.animals import *
 from objects.elastica import *
@@ -130,18 +131,27 @@ class Level(object):
     on the screen"""
     objects = None
 
-    def __init__(self, objInPlace, objToAdd, goal, toGoal):
+    def __init__(self, objInPlace, objToAdd, goal, toGoal, helpImage):
         self.simulator = SimulationView(objInPlace)
         self.objbar = ObjectBar(objToAdd)
         self.cmdbar = CommandBar()
         self.goal = goal
         self.toGoal = toGoal
+        self.helpImage = helpImage
 
     def draw(self):
         self.simulator.draw()
         self.objbar.draw()
         self.cmdbar.draw()
 
+    def show_help(self, screen):
+        screen.blit(self.helpImage, (600 - self.helpImage.get_width()/2,
+                                     450 - self.helpImage.get_height()/2) )
+        pygame.display.flip()
+        while True:
+            for event in pygame.event.get():
+                if event.type == MOUSEBUTTONDOWN:
+                    return
 
 def init_levels():
     #FIXME: fazer de um jeito menos lusitano
@@ -152,21 +162,38 @@ def init_levels():
     level1ObjToAdd = [ Penguin() ]
     level1Goal = level1ObjInPlace[-1]
     level1ToGoal = level1ObjInPlace[0]
+    level1HelpImage = pygame.image.load("../data/images/obj-level1.png")
 
-    level2ObjInPlace = [ Penguin((300,600),editable=False),
-                         Esteira((20,650),editable=False),
+    level2ObjInPlace = [ Penguin((300,500),editable=False),
                          Target((500,600), editable=False)]
-    level2ObjToAdd = [ BeachBall(), Penguin(), BowlingBall() ]
+    level2ObjToAdd = [ Esteira() ]
     level2Goal = level2ObjInPlace[-1]
     level2ToGoal = level2ObjInPlace[0]
+    level2HelpImage = pygame.image.load("../data/images/obj-level2.png")
 
-    level3ObjInPlace = [ BowlingBall((200,700),editable=False), Penguin((500, 800),editable=False)]
-    level3ObjToAdd = [ Penguin(), BeachBall() ]
+    level3ObjInPlace = [ BowlingBall((20,20), editable=False), 
+                         Esteira((10, 300),editable=False),
+                         Target((1100, 20), editable=False)]
+    level3ObjToAdd = [ Elastica(), Elastica()]
     level3Goal = level3ObjInPlace[-1]
     level3ToGoal = level3ObjInPlace[0]
+    level3HelpImage = pygame.image.load("../data/images/obj-level3.png")
 
-    level1 = Level( level1ObjInPlace, level1ObjToAdd, level1Goal, level1ToGoal)
-    level2 = Level( level2ObjInPlace, level2ObjToAdd, level2Goal, level2ToGoal)
-    level3 = Level( level3ObjInPlace, level3ObjToAdd, level3Goal, level3ToGoal)
+    level4ObjInPlace = [ BowlingBall((20,20), editable=False), 
+                         SoccerBall((800, 300),editable=False),
+                         Target((1100, 20), editable=False)]
+    level4ObjToAdd = [ Esteira(), Esteira()]
+    level4Goal = level4ObjInPlace[-1]
+    level4ToGoal = level4ObjInPlace[0]
+    level4HelpImage = pygame.image.load("../data/images/obj-level3.png")
 
-    return [level1, level2, level3]
+    level1 = Level( level1ObjInPlace, level1ObjToAdd, level1Goal,
+                    level1ToGoal, level1HelpImage)
+    level2 = Level( level2ObjInPlace, level2ObjToAdd, level2Goal,
+                    level2ToGoal, level2HelpImage)
+    level3 = Level( level3ObjInPlace, level3ObjToAdd, level3Goal,
+                    level3ToGoal, level3HelpImage)
+    level4 = Level( level4ObjInPlace, level4ObjToAdd, level4Goal,
+                    level4ToGoal, level4HelpImage)
+
+    return [level1, level2, level3, level4]

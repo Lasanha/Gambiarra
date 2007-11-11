@@ -29,6 +29,7 @@ class Thing(pygame.sprite.Sprite):
     editable = None
     speed = None
     gravity = None
+    snd = None
     elasticity = None # * 1%, from 0 up to 100
     
     def __init__(self, image, editable, initialPosition=None,
@@ -50,6 +51,6 @@ class Thing(pygame.sprite.Sprite):
         # temos a imagem na variavel <img> e
         # o 'zero' (ponto onde deve ser desenhado <pos>
         screen.blit(self.image, (pos[0],pos[1]))
-
-    def collision(self):
-        pass
+        
+    def play(self):
+        snd.play()
