@@ -5,9 +5,10 @@ import pygame
 from pygame.locals import *
 import os
 import levels as Levels
-from objects.wall import *
-from objects.target import Target
+from objects.elastica import Elastica
 from objects.esteira import Esteira
+from objects.target import Target
+from objects.wall import *
 
 def check_collision(sprite_list, wall_list):
     new_objects = pygame.sprite.RenderPlain()
@@ -20,7 +21,8 @@ def check_collision(sprite_list, wall_list):
             pass
 
         for w in wall_list:
-            if obj.rect.colliderect(w.rect):
+            hitbox = obj.rect.inflate(5,5)
+            if hitbox.colliderect(w.rect):
                 if isinstance(w, DownWall):
                     if obj.rect.bottom > w.rect.top:
                        obj.rect.bottom = w.rect.top - 1
@@ -34,12 +36,12 @@ def check_collision(sprite_list, wall_list):
                 if isinstance(w, LeftWall):
                     if obj.rect.left < w.rect.right:
                         obj.rect.left = w.rect.right + 1
-                        obj.speed[1] = -0.9*obj.speed[1]
+                        obj.speed[0] = -0.9*obj.speed[1]
 
                 if isinstance(w, RightWall):
                     if obj.rect.right > w.rect.left:
                         obj.rect.right = w.rect.left - 1
-                        obj.speed[1] = -0.9*obj.speed[1]
+                        obj.speed[0] = -0.9*obj.speed[1]
 
                 if isinstance(w, Esteira):
                      if (obj.rect.midbottom > w.rect.top and
@@ -47,6 +49,12 @@ def check_collision(sprite_list, wall_list):
                         obj.rect.bottom = w.rect.top
                         obj.speed[0] += w.sentido*3
                         obj.speed[1] = 0
+                        
+                if isinstance(w, Elastica):
+                     if (obj.rect.midbottom > w.rect.top and
+                          obj.rect.bottom < w.rect.bottom):
+                        obj.rect.bottom = w.rect.top
+                     obj.speed[1] *= -1.07
 
                 if isinstance(w, Target):
                     pass 
@@ -55,7 +63,7 @@ def check_collision(sprite_list, wall_list):
 
 
 class Game(object):
-    fps = 30
+    fps = 5
     screen = None
     screenSize = None
     playing = None
@@ -65,6 +73,7 @@ class Game(object):
     level = 0
     levels = []
     action = []
+    selected_element = None
 
     def __init__(self):
         pygame.init()
@@ -72,7 +81,7 @@ class Game(object):
         self.screenSize = self.screen.get_size()
         pygame.display.flip()
         self.run = True
-        self.playing = True
+        self.playing = False
         pygame.display.set_caption("Gambiarra")
         self.clock = pygame.time.Clock()
         self.levels = Levels.init_levels()
@@ -83,8 +92,7 @@ class Game(object):
     def event_handler(self):
         for event in pygame.event.get():
             if event.type == MOUSEBUTTONDOWN:
-                self.mouse_event( pygame.mouse.get_pos(), 
-                                  pygame.mouse.get_pressed() )
+                self.mouse_event( pygame.mouse.get_pos() )
 
     def update_screen(self, fps):
         #update dos elementos da tela
@@ -99,21 +107,12 @@ class Game(object):
                     newpos = obj.rect.move((obj.speed[0],obj.speed[1]))
                     obj.rect = newpos
                     if obj.speed[0]:
-                        obj.speed[0] *= 0.9
+                        obj.speed[0] *= 0.99
                     else:
                         obj.speed[0] = 20
                     obj.speed[1] += obj.gravity
         elif self.action:
-            # movimenta elementos na tela
-            if self.action[0] == "nothing":
-                self.action = []
-            elif self.action[0] == "move thing":
-                print "vai mover..."
-                self.action[1].rect = self.action[1].rect.move(self.action[2])
-                self.action = []
-            elif self.action[0] == "command":
-                self.action = []
-
+            action = None
 
     def start_window(self):
         #desenha a tela inicial (abstrato -chama os outros metodos predefinidos)
@@ -122,51 +121,41 @@ class Game(object):
     def next_level(self):
         pass
         
-    def mouse_event(self, mousePos, mouseButtonsPressed ):
-        if mouseButtonsPressed[0]:
-            collidedThing = False
-            collidedCommand = False
-            dragging = None
+    def mouse_event(self, mousePos):
+        if not self.selected_element:
+            collided = False
+            mouseMove = (0,0)
             mouseMove = pygame.mouse.get_rel()
-            print "botao esquerdo pressionado"
             
-            for obj in self.levels[self.level].simulator.objects:
-                if obj.rect.collidepoint(mousePos):
-                    if obj.editable:
-                        collidedThing = True
+            for element in self.levels[self.level].simulator.objects:
+                if element.rect.collidepoint(mousePos):
+                    print "COLIDIU PORRA", element
+                    collided = True
+                    self.selected_element = element
                     break
-
-            for obj in self.levels[self.level].objbar.objects:
-                if obj.rect.collidepoint(mousePos):
-                    print "colidiu barra"
-                    collidedThing = True
-                    break
-
-            for obj in self.levels[self.level].objbar.objects:
-                if obj.rect.collidepoint(mousePos):
-                    print "colidiu comando"
-                    collidedCommand = True
-                    break
-            
-            if collidedThing:
-                #esperar outro clique
-                destiny = False
-                while not destiny:
-                    for evt in pygame.event.get():
-                        if evt.type == MOUSEBUTTONDOWN:
-                            print "destino clicado"
-                            destiny = True
-                
-                mouseMove = pygame.mouse.get_rel()
-                if obj:
-                    self.action = [ "move thing", obj, mouseMove ]
-             
-            elif collidedCommand:
-                if obj:
-                    self.action = [ "command", obj ]
                     
-            else:
-                self.action = [ "nothing" ]
+            if not self.selected_element: #se nao encontrou no for anterior
+                print "nao colidiu no simulador"
+                for element in self.levels[self.level].objbar.objects:
+                    if element.rect.collidepoint(mousePos):
+                        print "COLIDIU PORRA", element
+                        collided = True
+                        self.selected_element = element
+                        break
+                        
+            """if not self.selected_element: #se nao encontrou no for anterior
+                for element in self.levels[self.level].cmdbar.commands:
+                    if element.rect.collidepoint(mousePos):
+                        print "COLIDIU PORRA", element
+                        collided = True
+                        self.selected_element = element
+                        break"""
+                
+        else:
+            mouseMove = pygame.mouse.get_rel()
+            self.selected_element.rect = self.selected_element.rect.move(mouseMove)
+            self.selected_element = None
+
 
     def main_loop(self):
         #quando clicar em play transformar o botao em stop

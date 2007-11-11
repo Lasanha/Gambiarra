@@ -4,13 +4,15 @@
 import pygame
 from objects.balls import *
 from objects.animals import *
-from objects.wall import *
+from objects.elastica import *
 from objects.esteira import *
 from objects.target import *
+from objects.wall import *
 from command import *
 
 def _is_static(obj):
-    if isinstance(obj, Target) or isinstance(obj, Esteira):
+    if (isinstance(obj, Target) or isinstance(obj, Esteira)
+        or isinstance(obj, Elastica)):
         return True
 
 class SimulationView(object):
@@ -67,7 +69,8 @@ class ObjectBar(object):
 
         objpos = [15, 785]
         for item in self.objects:
-            item.draw(screen, objpos)
+            item.rect.topleft = objpos
+            item.draw(screen, item.rect.topleft )
             objpos[0] += item.image.get_width() + 15
 
     def update(self):
@@ -116,8 +119,10 @@ class Level(object):
 def init_levels():
     #FIXME: fazer de um jeito menos lusitano
     #Sample levels
-    level1ObjInPlace = [ BowlingBall((200,300)), BeachBall((300,0)), Esteira((300,500)), Target((1000,600))]
-    level1ObjToAdd = [ Penguin(), BeachBall(), BowlingBall(), Esteira() ]
+    level1ObjInPlace = [ BowlingBall((200,300)), BeachBall((300,0)),
+                         Esteira((300,500)), Target((1000,600)),
+                         Elastica((700, 600))]
+    level1ObjToAdd = [ Penguin(), BeachBall(), BowlingBall(), Esteira(), Elastica() ]
 
     level2ObjInPlace = [ Penguin((300,600)), Esteira((20,650))]
     level2ObjToAdd = [ BeachBall(), Penguin(), BowlingBall() ]

@@ -3,6 +3,7 @@ activity/activity.info
 
 data/images/bolaBoliche.png
 data/images/bola.png
+data/images/cama_elastica.png
 data/images/downwall.png
 data/images/esteira2.png
 data/images/esteira_dir.png
@@ -40,10 +41,11 @@ Gambiarra/levels.py
 Gambiarra/objects/__init__.py
 Gambiarra/objects/animals.py
 Gambiarra/objects/balls.py
-Gambiarra/objects/wall.py
-Gambiarra/objects/things.py
+Gambiarra/objects/elastica.py
 Gambiarra/objects/esteira.py
 Gambiarra/objects/target.py
+Gambiarra/objects/things.py
+Gambiarra/objects/wall.py
 
 olpcgames/activity.py
 olpcgames/camera.py

@@ -4,11 +4,13 @@ from os.path import abspath
 
 import pygame
 
-class Command(object):
+class Command(pygame.sprite.Sprite):
     image = None
     
     def __init__(self, img):
+        pygame.sprite.Sprite.__init__(self)
         self.image = img
+        self.rect = self.image.get_rect()
 
     def draw(self, screen, pos):
         # temos a imagem na variavel <img> e
