@@ -1,7 +1,10 @@
 # /gambiarra/objects/things.py
 # classe mais abstrata para "coisas" na tela
 
-class Thing(object):
+import pygame
+
+class Thing(pygame.sprite.Sprite):
+
     img = None
     initialPosition = None
     mobility = None
@@ -12,9 +15,13 @@ class Thing(object):
     
     def __init__(self, image, editable, initialPosition=None, elasticity = 100,
                  mobility = False, gravity = 10 ):
-        self.img = image
+        pygame.sprite.Sprite.__init__(self) #call Sprite intializer
+        self.image = image
+        self.rect = image.get_rect()
+        
         if initialPosition:
             self.initialPosition = initialPosition
+            self.rect.topleft = initialPosition[0], initialPosition[1]
         self.elasticity = elasticity
         self.editable = editable
         self.speed = [0,0]
@@ -24,46 +31,7 @@ class Thing(object):
     def draw(self, screen, pos ):
         # temos a imagem na variavel <img> e
         # o 'zero' (ponto onde deve ser desenhado <pos>
-        screen.blit(self.img, (pos[0],pos[1]))
+        screen.blit(self.image, (pos[0],pos[1]))
 
     def collision(self):
-        """Verifies if the animal has hit the floor, the ceil or any wall"""
-        
-        #the floor
-        centerBottom = self.centerPosition[1] + (self.heigth / 2)
-        if centerBottom >= 700:
-            # touched the floor, STOP!
-            self.speed[0] = 0
-            self.speed[1] = 0
-            
-            #self.speed[1] = - ( self.elasticity / 100 ) * self.speed[1]
-
-
-        #the ceil
-        centerTop = self.centerPosition[1] - (self.heigth / 2)
-        if centerTop <= 0:
-            # touched the ceil, STOP!
-            self.speed[0] = 0
-            self.speed[1] = 0
-            
-            #self.speed[1] = - ( self.elasticity / 100 ) * self.speed[1]
-        
-        #left wall
-        centerLeft = self.centerPosition[0] - (self.heigth / 2)
-        if centerLeft <= 0:
-            #tocou a parede esquerda, para
-            self.speed[0] = 0
-            self.speed[1] = 0
-            
-            #self.speed[0] = - ( self.elasticity / 100 ) * self.speed[0]
-            
-            #right wall
-        centerRight = self.centerPosition[0] + (heigth / 2)
-        if centerRight >= 1200:
-            #tocou a parede direita, para
-            self.speed[0] = 0
-            self.speed[1] = 0
-                
-            #self.speed[0] = - ( self.elasticity / 100 ) * self.speed[0]
-
-
+        pass

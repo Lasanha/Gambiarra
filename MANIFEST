@@ -5,8 +5,13 @@ data/bola.png
 data/helpButton.png
 data/penguin16.png
 data/penguin.png
+data/pen.png
 data/playButton.png
 data/quitButton.png
+data/downwall.png
+data/leftwall.png
+data/rightwall.png
+data/upwall.png
 Gambiarra/__init__.py
 Gambiarra/gambiarra.py
 Gambiarra/levels/__init__.py

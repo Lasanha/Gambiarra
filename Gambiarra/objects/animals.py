@@ -16,4 +16,4 @@ class Penguin(Thing):
         super(Penguin, self).__init__(
               pygame.image.load(abspath("../data/penguin.png")),
               editable, initialPosition, elasticity = 100, mobility = True,
-              gravity = 10)
+              gravity = 1)
