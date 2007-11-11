@@ -23,7 +23,7 @@ class Thing(pygame.sprite.Sprite):
             self.initialPosition = initialPosition
             self.rect.topleft = initialPosition[0], initialPosition[1]
         self.elasticity = elasticity
-        self.editable = editable
+        self.editable = True ###VOLTAR!!
         self.speed = [0,0]
         self.mobility = mobility
         self.gravity = gravity
