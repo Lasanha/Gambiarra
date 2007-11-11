@@ -38,7 +38,7 @@ class UpWall(Thing):
         #pygame.draw.circle(self.img, [0,10,0], (85, 85), 80)
 
 class DownWall(Thing):
-    def __init__(self, initialPosition = [15,685], editable=False):
+    def __init__(self, initialPosition = [15,755], editable=False):
         super(DownWall, self).__init__(
               pygame.image.load(abspath("../data/downwall.png")),
               editable, initialPosition, elasticity = 100, mobility = False,

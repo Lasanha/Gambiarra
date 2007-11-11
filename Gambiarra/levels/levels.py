@@ -5,6 +5,7 @@ import pygame
 from objects.balls import *
 from objects.animals import *
 from objects.wall import *
+from objects.esteira import *
 
 class SimulationView(object):
     """ This widget holds the objects being simulated. """
@@ -14,13 +15,14 @@ class SimulationView(object):
     
     def __init__(self, objects):
         self.running = False
-        self.background = pygame.Surface((1200, 700))
+        self.background = pygame.Surface((1200, 770))
         self.background.fill([0,0,150])
         self.objects = pygame.sprite.RenderPlain(objects)
-        LeftWall().add(self.objects)
-        RightWall().add(self.objects)
-        UpWall().add(self.objects)
-        DownWall().add(self.objects)
+        self._walls = []
+        self._walls.append(LeftWall())
+        self._walls.append(RightWall())
+        self._walls.append(UpWall())
+        self._walls.append(DownWall())
 
     def draw(self, pos = None):
         screen = pygame.display.get_surface()
@@ -29,6 +31,9 @@ class SimulationView(object):
         else:
             screen.blit(self.background, (0, 0))
 
+        for wall in self._walls:
+            wall.draw(screen, wall.rect)
+
         for item in self.objects:
             item.draw(screen, item.rect.topleft)
 
@@ -36,18 +41,18 @@ class ObjectBar(object):
     """ This widget contains the objects available for the problem. """
 
     def __init__(self, objects):
-        self.background = pygame.Surface((1000, 200))
+        self.background = pygame.Surface((1000, 130))
         self.background.fill([0,255,0])   #TODO: achar uma cor melhor =D
         self.objects = pygame.sprite.RenderPlain(objects)
 
     def draw(self, pos = None):
         screen = pygame.display.get_surface()
         if pos:
-            screen.blit(self.background, (pos[0], 700 + pos[1]), pos)
+            screen.blit(self.background, (pos[0], 770 + pos[1]), pos)
         else:
-            screen.blit(self.background, (0, 700))
+            screen.blit(self.background, (0, 770))
 
-        objpos = [0,715]
+        objpos = [0, 785]
         for item in self.objects:
             item.draw(screen, objpos)
             objpos[0] += item.image.get_width() + 15
@@ -59,16 +64,16 @@ class CommandBar(object):
     """ This widget contains the commands: play, help, and quit. KISS! =D """
 
     def __init__(self):
-        self.background = pygame.Surface((200, 200))
+        self.background = pygame.Surface((200, 130))
         self.width, self.height = self.background.get_size()
         self.background.fill([0,0,255])   #TODO: achar uma cor melhor =D
         
     def draw(self, pos=None):
         screen = pygame.display.get_surface()    
         if pos:
-            screen.blit(self.background, (1000 + pos[0], 700 + pos[1]), pos)
+            screen.blit(self.background, (1000 + pos[0], 770 + pos[1]), pos)
         else:
-            screen.blit(self.background, (1000, 700))
+            screen.blit(self.background, (1000, 770))
 
     def update(self):
         pass
@@ -92,10 +97,10 @@ class Level(object):
 def init_levels():
     #FIXME: fazer de um jeito menos lusitano
     #Sample levels
-    level1ObjInPlace = [ BowlingBall((200,300)), BeachBall((400,800))]
+    level1ObjInPlace = [ BowlingBall((200,300)), BeachBall((100,100))]
     level1ObjToAdd = [ Penguin(), BeachBall() ]
 
-    level2ObjInPlace = [ Penguin((300,600))]
+    level2ObjInPlace = [ Penguin((300,600)), Esteira((20,650))]
     level2ObjToAdd = [ BeachBall(), Penguin(), BowlingBall() ]
 
     level3ObjInPlace = [ BowlingBall((200,700)), Penguin((500, 800))]
