@@ -1,0 +1,4 @@
+Hi! If you wanna run this game outside a XO, just enter in the Gambiarra
+directory and run gambiarra.py . Something like this:
+$ cd Gambiarra
+$ python gambiarra.py
