@@ -28,8 +28,12 @@ from things import Thing
 class Elastica(Thing):
 
     def __init__(self, initialPosition = [0,0], editable=True):
+        if pygame.mixer.get_init():
+            snd = pygame.mixer.Sound(abspath("../data/snd/cama_elastica.wav"))
+        else:
+            snd = None
         super(Elastica, self).__init__(
               pygame.image.load(abspath("../data/images/cama_elastica.png")),
-              editable, pygame.mixer.Sound(abspath("../data/snd/cama_elastica.wav")),
+              editable, snd,
               initialPosition, elasticity = 100, mobility = False,
               gravity = 10)

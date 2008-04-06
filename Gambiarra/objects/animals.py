@@ -27,9 +27,13 @@ from os.path import abspath
 
 class Penguin(Thing):
     def __init__(self, initialPosition=None, editable=True):
+        if pygame.mixer.get_init():
+            snd = pygame.mixer.Sound(abspath("../data/snd/penguin.wav"))
+        else:
+            snd = None
         super(Penguin, self).__init__(
              pygame.image.load(abspath("../data/images/penguin.png")),
-             editable, pygame.mixer.Sound(abspath("../data/snd/penguin.wav")),
+             editable, snd,
              initialPosition, elasticity = 100, mobility = True,
              gravity = 5)
         self.speed=[5,0]

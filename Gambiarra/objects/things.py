@@ -41,9 +41,6 @@
 
 import pygame
 
-class NoSound():
-    def play(self): return
-
 class Thing(pygame.sprite.Sprite):
 
     img = None
@@ -77,4 +74,5 @@ class Thing(pygame.sprite.Sprite):
         screen.blit(self.image, (pos[0],pos[1]))
         
     def play(self):
-        self.snd.play()
+        if self.snd and pygame.mixer.get_init():
+            self.snd.play()

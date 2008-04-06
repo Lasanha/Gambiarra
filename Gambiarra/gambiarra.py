@@ -20,19 +20,22 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
-import pygame
-from pygame.locals import *
 import os
 import sys
 from os.path import abspath
+
+import pygame
+from pygame.locals import *
 import levels as Levels
+
+from command import Play, Help, Quit
+from gamemenu import GameMenu
+
 from objects.animals import *
 from objects.elastica import Elastica
 from objects.esteira import Esteira
 from objects.target import Target
 from objects.wall import *
-from command import Play, Help, Quit
-from gamemenu import GameMenu
 
 def check_collision(sprite_list, wall_list):
     new_objects = pygame.sprite.RenderPlain()
@@ -136,37 +139,44 @@ def check_collision(sprite_list, wall_list):
 
 
 class Game(object):
+    # controle do jogo
     fps = 30
-    screen = None
     playing = None
-    run = None
-    background = None
+    running = None
     clock = None
     level = 0
     levels = []
     selected_element = None
+    _showed_help = None
+    count = None
+    play_sounds = None
+
+    # elementos do jogo
+    screen = None
     menu = None
     congrats = None
     congratsSnd = None
-    _showed_help = None
-    count = None
 
-    def __init__(self):
+    def __init__(self, play_sounds=True):
         pygame.init()
-        pygame.mixer.init()
+        self.play_sounds = play_sounds
+        if self.play_sounds:
+            pygame.mixer.init()
         self.screen = pygame.display.set_mode((1200,900)) #omitindo flags
         pygame.display.flip()
-        self.run = True
+        self.running = True
         self.playing = False
         pygame.display.set_caption("Gambiarra")
         self.clock = pygame.time.Clock()
         self.levels = Levels.init_levels()
         self.menu = GameMenu()
         self.congrats = pygame.image.load("../data/images/fim_fase.png")
-        self.congratsSnd = pygame.mixer.Sound(abspath("../data/snd/Congrats.wav"))
+        if self.play_sounds:
+            self.congratsSnd = pygame.mixer.Sound(abspath("../data/snd/Congrats.wav"))
         self._showed_help = False
         self.count = 0
 
+    def run(self):
         #inicia o loop
         self.main_loop()
 
@@ -198,15 +208,6 @@ class Game(object):
                 if self.selected_element.editable:
                     self.selected_element.rect.center = pygame.mouse.get_pos()
                 
-
-    def goal_reached(self):
-        reached = False
-        if self.level < len(self.levels):
-            if self.levels[self.level].goal.rect.collidepoint(
-                                   self.levels[self.level].toGoal.rect.center):
-                reached = True
-        return reached
-
     def mouse_event(self, mousePos):
         if not self.selected_element:
             collided = False
@@ -269,11 +270,14 @@ class Game(object):
             self.selected_element = None
 
     def show_congratulations(self):
-        pygame.mixer.stop()
-        self.congratsSnd.play()
+        if self.play_sounds:
+            pygame.mixer.stop()
+            self.congratsSnd.play()
+
         self.screen.blit(self.congrats, (600 - self.congrats.get_width()/2,
                                          450 - self.congrats.get_height()/2) )
         pygame.display.flip()
+
         while True:
             for event in pygame.event.get():
                 if event.type == MOUSEBUTTONDOWN:
@@ -281,10 +285,8 @@ class Game(object):
 
     def main_loop(self):
         self.menu.run()
-        while self.run:
-            goal = self.goal_reached()
-            while (not goal and
-                   self.level < len(self.levels)):
+        while self.running and self.level < len(self.levels):
+            while not self.levels[self.level].goal_reached():
                 self.event_handler()
                 self.clock.tick(self.fps)
                 self.update_screen(self.fps)
@@ -296,17 +298,16 @@ class Game(object):
 
                 pygame.display.flip()
 
-                goal = self.goal_reached()
             self.playing = False
             self._showed_help = False
-            goal = False
             self.level += 1
             self.show_congratulations()
             if (len(self.levels) == self.level) :
-                self.run = False
+                self.running = False
 
 def main():
-    game = Game()
+    game = Game(play_sounds=False)
+    game.run()
 
 if __name__ == "__main__":
     main()

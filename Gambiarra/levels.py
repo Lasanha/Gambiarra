@@ -30,6 +30,8 @@ from objects.wall import *
 from command import *
 
 def _is_static(obj):
+    # FIXME: we need to define a way of saying that an object is static, this
+    # "if" is repulsive! =D
     if (isinstance(obj, Target) or isinstance(obj, Esteira)
         or isinstance(obj, Elastica)):
         return True
@@ -131,13 +133,18 @@ class Level(object):
     on the screen"""
     objects = None
 
-    def __init__(self, objInPlace, objToAdd, goal, toGoal, helpImage):
+    def __init__(self, objInPlace, objToAdd, goals, helpImage):
         self.simulator = SimulationView(objInPlace)
         self.objbar = ObjectBar(objToAdd)
         self.cmdbar = CommandBar()
-        self.goal = goal
-        self.toGoal = toGoal
+        self.goals = goals
         self.helpImage = helpImage
+
+    def goal_reached(self):
+        for obj, goal in self.goals:
+            if not obj.rect.collidepoint(goal.rect.center):
+                return False
+        return True
 
     def draw(self):
         self.simulator.draw()
@@ -180,11 +187,14 @@ def init_levels():
     level3HelpImage = pygame.image.load("../data/images/obj-level3.png")
 
     level4ObjInPlace = [ BowlingBall((20,20), editable=False), 
-                         SoccerBall((800, 300),editable=False),
-                         Target((900, 90), editable=False)]
-    level4ObjToAdd = [ Esteira(), Esteira()]
-    level4Goal = level4ObjInPlace[-1]
-    level4ToGoal = level4ObjInPlace[0]
+                         SoccerBall((800, 300), editable=False),
+                         Target((900, 90), editable=False),
+                         Target((100, 550), editable=False)]
+    level4ObjToAdd = [ Esteira(), Esteira(), Esteira()]
+    level4Goal1 = level4ObjInPlace[-2]
+    level4ToGoal1 = level4ObjInPlace[0]
+    level4Goal2 = level4ObjInPlace[-1]
+    level4ToGoal2 = level4ObjInPlace[1]
     level4HelpImage = pygame.image.load("../data/images/obj-level4.png")
 
     level5ObjInPlace = [ BowlingBall((1000,300), editable=False),
@@ -204,17 +214,35 @@ def init_levels():
     level6ToGoal = level6ObjInPlace[0]
     level6HelpImage = pygame.image.load("../data/images/obj-level6.png")
 
-    level1 = Level( level1ObjInPlace, level1ObjToAdd, level1Goal,
-                    level1ToGoal, level1HelpImage)
-    level2 = Level( level2ObjInPlace, level2ObjToAdd, level2Goal,
-                    level2ToGoal, level2HelpImage)
-    level3 = Level( level3ObjInPlace, level3ObjToAdd, level3Goal,
-                    level3ToGoal, level3HelpImage)
-    level4 = Level( level4ObjInPlace, level4ObjToAdd, level4Goal,
-                    level4ToGoal, level4HelpImage)
-    level5 = Level( level5ObjInPlace, level5ObjToAdd, level5Goal,
-                    level5ToGoal, level5HelpImage)
-    level6 = Level( level6ObjInPlace, level6ObjToAdd, level6Goal,
-                    level6ToGoal, level6HelpImage)
+    level1 = Level( level1ObjInPlace,
+                    level1ObjToAdd,
+                    [(level1Goal, level1ToGoal)],
+                    level1HelpImage)
+
+    level2 = Level( level2ObjInPlace,
+                    level2ObjToAdd,
+                    [(level2Goal, level2ToGoal)],
+                    level2HelpImage)
+
+    level3 = Level( level3ObjInPlace,
+                    level3ObjToAdd,
+                    [(level3Goal,level3ToGoal)],
+                    level3HelpImage)
+
+    level4 = Level( level4ObjInPlace,
+                    level4ObjToAdd,
+                    [(level4Goal1, level4ToGoal1),
+                     (level4Goal2, level4ToGoal2)],
+                    level4HelpImage)
+
+    level5 = Level( level5ObjInPlace,
+                    level5ObjToAdd,
+                    [(level5Goal, level5ToGoal)],
+                    level5HelpImage)
+
+    level6 = Level( level6ObjInPlace,
+                    level6ObjToAdd,
+                    [(level6Goal, level6ToGoal)],
+                    level6HelpImage)
 
     return [level1, level2, level3, level4, level5, level6]
