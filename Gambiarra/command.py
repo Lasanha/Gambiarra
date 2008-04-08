@@ -25,7 +25,7 @@ import pygame
 
 class Command(pygame.sprite.Sprite):
     image = None
-    
+
     def __init__(self, img):
         pygame.sprite.Sprite.__init__(self)
         self.image = img
@@ -43,10 +43,10 @@ class Play(Command):
 
 class Help(Command):
     def __init__(self):
-        super(Help, self).__init__( pygame.image.load( 
+        super(Help, self).__init__( pygame.image.load(
                           abspath("../data/images/helpButton.png") ) )
 
 class Quit(Command):
     def __init__(self):
-        super(Quit, self).__init__( pygame.image.load( 
+        super(Quit, self).__init__( pygame.image.load(
                           abspath("../data/images/quitButton.png") ) )

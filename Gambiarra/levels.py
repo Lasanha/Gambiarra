@@ -41,7 +41,7 @@ class SimulationView(object):
     running = None
     background = None
     objects = None
-    
+
     def __init__(self, objects):
         self.running = False
         self.background = pygame.Surface((1200, 770))
@@ -111,7 +111,7 @@ class CommandBar(object):
         self.width, self.height = self.background.get_size()
         self.background.fill([0,0,255])   #TODO: achar uma cor melhor =D
         self.commands = [ Play(), Help(), Quit() ]
-        
+
     def draw(self, pos=None):
         screen = pygame.display.get_surface()
         if pos:
@@ -178,7 +178,7 @@ def init_levels():
     level2ToGoal = level2ObjInPlace[0]
     level2HelpImage = pygame.image.load("../data/images/obj-level2.png")
 
-    level3ObjInPlace = [ BowlingBall((20,20), editable=False), 
+    level3ObjInPlace = [ BowlingBall((20,20), editable=False),
                          Esteira((10, 300),editable=False),
                          Target((1100, 20), editable=False)]
     level3ObjToAdd = [ Elastica(), Elastica()]
@@ -186,7 +186,7 @@ def init_levels():
     level3ToGoal = level3ObjInPlace[0]
     level3HelpImage = pygame.image.load("../data/images/obj-level3.png")
 
-    level4ObjInPlace = [ BowlingBall((20,20), editable=False), 
+    level4ObjInPlace = [ BowlingBall((20,20), editable=False),
                          SoccerBall((800, 300), editable=False),
                          Target((900, 90), editable=False),
                          Target((100, 550), editable=False)]

@@ -29,7 +29,7 @@ class GameMenu(object):
     background = None
 #    level = None
     start = None
-    
+
     def __init__(self):
 #        pygame.init()
 #        pygame.display.set_mode((1280,800))
@@ -118,7 +118,7 @@ class LevelButton(object):
     numberOfLevels = None
     current_level_img = None
     clicked = None
-    
+
     def __init__(self, position, numberOfLevels = 1):
         nonHover = pygame.image.load(
                           abspath("../data/images/nivel_normal.png") )
@@ -132,23 +132,23 @@ class LevelButton(object):
         self.numberOfLevels = numberOfLevels
         self.current_level_img = None # Precisa 'renderizar' o numero do nivel
         self.clicked = False
-    
+
     def draw(self, screen):
         screen.blit(self.current_img, self.position)
-        
+
     def click(self):
         self.clicked = True
         self.level += 1
         if self.level == self.numberOfLevels :
             self.level = 0
-    
+
 class StartButton(object):
     img = None
     position = None
     current = None
     current_img = None
     clicked = None
-    
+
     def __init__(self, position):
         nonHover=pygame.image.load(
                         abspath("../data/images/iniciar_normal.png") )
@@ -159,9 +159,9 @@ class StartButton(object):
         self.current = 0
         self.current_img = self.img[self.current]
         self.clicked = False
-        
+
     def draw(self, screen):
         screen.blit(self.current_img, self.position)
-        
+
     def click(self):
         self.clicked = True

@@ -88,7 +88,7 @@ def check_collision(sprite_list, wall_list):
                     if obj.rect.top <= w.rect.bottom:
                         obj.rect.top = w.rect.bottom + 5
                         obj.speed[1] *= -0.95*obj.elasticity/100
-                
+
                 if isinstance(w, LeftWall):
                     if obj.rect.left <= w.rect.right:
                         obj.rect.left = w.rect.right + 5
@@ -107,7 +107,7 @@ def check_collision(sprite_list, wall_list):
                              obj.speed[1] = 0
                         else:
                              obj.speed[1] *= -0.75*obj.elasticity/100
-                        
+
                 if isinstance(w, Elastica):
                      if (obj.rect.bottom >= w.rect.top and obj.speed[1] > 0):
                         obj.rect.bottom = w.rect.top - 1
@@ -188,7 +188,7 @@ class Game(object):
     def update_screen(self, fps):
         #update dos elementos da tela
         if self.playing:
-            
+
             # executa a simulacao
             objs = check_collision(self.levels[self.level].simulator.objects,
                                 self.levels[self.level].simulator.staticObjs)
@@ -207,7 +207,7 @@ class Game(object):
             if self.selected_element:
                 if self.selected_element.editable:
                     self.selected_element.rect.center = pygame.mouse.get_pos()
-                
+
     def mouse_event(self, mousePos):
         if not self.selected_element:
             collided = False
@@ -219,18 +219,18 @@ class Game(object):
                     collided = True
                     self.selected_element = element
                     break
-                    
+
             if not self.selected_element:
                 for element in self.levels[self.level].simulator.staticObjs:
                     if element.rect.collidepoint(mousePos):
                         collided = True
                         self.selected_element = element
-                        
+
                         if isinstance(element,Esteira) and element.editable:
                             self.count += 1
                         if self.count == 1:
                             element.sentido=-element.sentido
-                            self.count = 0        
+                            self.count = 0
                         break
 
             if not self.selected_element: #se nao encontrou no for anterior

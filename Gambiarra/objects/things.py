@@ -51,13 +51,13 @@ class Thing(pygame.sprite.Sprite):
     gravity = None
     snd = None
     elasticity = None # * 1%, from 0 up to 100
-    
+
     def __init__(self, image, editable, snd, initialPosition=None,
                  elasticity = 70, mobility = False, gravity = 5 ):
         pygame.sprite.Sprite.__init__(self) #call Sprite intializer
         self.image = image
         self.rect = image.get_rect()
-        
+
         if initialPosition:
             self.initialPosition = initialPosition
             self.rect.topleft = initialPosition[0], initialPosition[1]
@@ -72,7 +72,7 @@ class Thing(pygame.sprite.Sprite):
         # temos a imagem na variavel <img> e
         # o 'zero' (ponto onde deve ser desenhado <pos>
         screen.blit(self.image, (pos[0],pos[1]))
-        
+
     def play(self):
         if self.snd and pygame.mixer.get_init():
             self.snd.play()

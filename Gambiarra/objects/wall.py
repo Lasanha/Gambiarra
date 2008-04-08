@@ -31,7 +31,7 @@ class LeftWall(Thing):
            pygame.image.load(abspath("../data/images/leftwall.png")),
            editable, None,
            initialPosition, elasticity = 100, mobility = False, gravity = 10)
-        
+
 class RightWall(Thing):
     def __init__(self, initialPosition = [1185,0], editable=False):
         super(RightWall, self).__init__(
