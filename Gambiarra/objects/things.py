@@ -76,3 +76,42 @@ class Thing(pygame.sprite.Sprite):
     def play(self):
         if self.snd and pygame.mixer.get_init():
             self.snd.play()
+
+    def collide(self, obj):
+        ''' Very basic implementation of elastic collision'''
+        #TODO: verify mobility attribute
+        hitbox = self.rect.inflate(5,5)
+        if hitbox.colliderect(obj.rect):
+            if self.rect.left < obj.rect.right:
+                self.speed[0], obj.speed[0] = obj.speed[0], self.speed[0]
+                self.rect.left = obj.rect.right - 1
+            if self.rect.left > obj.rect.right:
+                self.speed[0], obj.speed[0] = obj.speed[0], self.speed[0]
+                self.rect.right = obj.rect.left - 1
+            if self.rect.bottom > obj.rect.top:
+                self.speed[1], obj.speed[1] = obj.speed[1], self.speed[1]
+                self.rect.bottom = obj.rect.top - 1
+            if self.rect.top < obj.rect.bottom:
+                self.speed[1], obj.speed[1] = obj.speed[1], self.speed[1]
+                self.rect.top = obj.rect.bottom + 1
+            return True
+        return False
+
+def check_collision(sprite_list, wall_list):
+    new_objects = pygame.sprite.RenderPlain()
+    for obj in sprite_list:
+        obj.remove(sprite_list)
+        obj.add(new_objects)
+
+#        for s in sprite_list:
+#            if s.collide(obj)
+#                obj.play()
+#                s.play()
+
+        for w in wall_list:
+            if w.collide(obj):
+                obj.play()
+                w.play()
+
+    return new_objects
+

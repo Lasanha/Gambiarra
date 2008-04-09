@@ -30,7 +30,16 @@ class LeftWall(Thing):
         super(LeftWall, self).__init__(
            pygame.image.load(abspath("../data/images/leftwall.png")),
            editable, None,
-           initialPosition, elasticity = 100, mobility = False, gravity = 10)
+           initialPosition, elasticity = 100, mobility = False,
+           gravity = 10)
+
+    def collide(self, obj):
+        if obj.rect.colliderect(self.rect):
+            if obj.rect.left <= self.rect.right:
+                obj.rect.left = self.rect.right + 5
+            obj.speed[0] *= -0.95*obj.elasticity/100
+            return True
+        return False
 
 class RightWall(Thing):
     def __init__(self, initialPosition = [1185,0], editable=False):
@@ -38,6 +47,14 @@ class RightWall(Thing):
            pygame.image.load(abspath("../data/images/rightwall.png")),
            editable, None,
            initialPosition, elasticity = 100, mobility = False, gravity = 10)
+
+    def collide(self, obj):
+        if obj.rect.colliderect(self.rect):
+            if obj.rect.right >= self.rect.left:
+                obj.rect.right = self.rect.left - 5
+            obj.speed[0] *= -0.95*obj.elasticity/100
+            return True
+        return False
 
 class UpWall(Thing):
     def __init__(self, initialPosition = [15,0], editable=False):
@@ -47,6 +64,14 @@ class UpWall(Thing):
             initialPosition, elasticity = 100, mobility = False,
             gravity = 10)
 
+    def collide(self, obj):
+        if obj.rect.colliderect(self.rect):
+            if obj.rect.top <= self.rect.bottom:
+                obj.rect.top = self.rect.bottom + 5
+            obj.speed[1] *= -0.95*obj.elasticity/100
+            return True
+        return False
+
 class DownWall(Thing):
     def __init__(self, initialPosition = [15,755], editable=False):
         super(DownWall, self).__init__(
@@ -54,3 +79,12 @@ class DownWall(Thing):
             editable, None,
             initialPosition, elasticity = 100, mobility = False,
             gravity = 10)
+
+    def collide(self, obj):
+        if obj.rect.colliderect(self.rect):
+            if obj.rect.bottom > self.rect.top:
+                obj.rect.bottom = self.rect.top - 5
+            obj.speed[1] *= -0.75*obj.elasticity/100
+            return True
+        return False
+

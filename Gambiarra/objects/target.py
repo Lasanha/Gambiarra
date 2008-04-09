@@ -32,3 +32,6 @@ class Target(Thing):
               editable, None,
               initialPosition, elasticity = 100, mobility = False,
               gravity = 10)
+
+    def collide(self, obj):
+        pass

@@ -48,3 +48,13 @@ class Esteira(Thing):
             screen.blit(self.image_dir, (pos[0],pos[1]))
         elif self.sentido == -1:
             screen.blit(self.image_esq, (pos[0],pos[1]))
+
+    def collide(self, obj):
+        if obj.rect.colliderect(self.rect):
+            if (obj.rect.bottom >= self.rect.top and obj.speed[1] > 0):
+                obj.rect.bottom = self.rect.top - 5
+            obj.speed[0] = self.sentido*15
+            obj.speed[1] *= -0.75*obj.elasticity/100
+            return True
+        return False
+

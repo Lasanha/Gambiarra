@@ -37,3 +37,14 @@ class Elastica(Thing):
               editable, snd,
               initialPosition, elasticity = 100, mobility = False,
               gravity = 10)
+
+    def collide(self, obj):
+        if obj.rect.colliderect(self.rect):
+            if (obj.rect.bottom >= self.rect.top and obj.speed[1] > 0):
+                obj.rect.bottom = self.rect.top - 1
+            elif (obj.rect.top <= self.rect.bottom):
+                obj.rect.top = self.rect.bottom + 1
+            obj.speed[1] *= -0.99
+            return True
+        return False
+
