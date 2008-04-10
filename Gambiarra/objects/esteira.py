@@ -31,15 +31,15 @@ class Esteira(Thing):
 
     def __init__(self, initialPosition = [0,0], editable=True):
         super(Esteira, self).__init__(
-              pygame.image.load(abspath("../data/images/esteira_dir.png")),
+              pygame.image.load(abspath("data/images/esteira_dir.png")),
               editable, None,
               initialPosition, elasticity = 100, mobility = False,
               gravity = 10)
         self.sentido = 1
         self.image_dir = pygame.image.load(
-                            abspath("../data/images/esteira_dir.png"))
+                            abspath("data/images/esteira_dir.png"))
         self.image_esq = pygame.image.load(
-                            abspath("../data/images/esteira_esq.png"))
+                            abspath("data/images/esteira_esq.png"))
 
     def draw(self, screen, pos):
         # temos a imagem na variavel <img> e

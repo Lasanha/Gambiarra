@@ -71,9 +71,9 @@ class Game(object):
         self.clock = pygame.time.Clock()
         self.levels = Levels.init_levels()
         self.menu = GameMenu()
-        self.congrats = pygame.image.load("../data/images/fim_fase.png")
+        self.congrats = pygame.image.load("data/images/fim_fase.png")
         if self.play_sounds:
-            self.congratsSnd = pygame.mixer.Sound(abspath("../data/snd/Congrats.wav"))
+            self.congratsSnd = pygame.mixer.Sound(abspath("data/snd/Congrats.wav"))
         self._showed_help = False
         self.count = 0
 
@@ -206,9 +206,3 @@ class Game(object):
             if (len(self.levels) == self.level) :
                 self.running = False
 
-def main():
-    game = Game(play_sounds=False)
-    game.run()
-
-if __name__ == "__main__":
-    main()

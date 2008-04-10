@@ -34,7 +34,7 @@ class GameMenu(object):
 #        pygame.init()
 #        pygame.display.set_mode((1280,800))
         self.screen = pygame.display.get_surface()
-        self.background = pygame.image.load(abspath("../data/images/background.png"))
+        self.background = pygame.image.load(abspath("data/images/background.png"))
         # mudar o arquivo de logotipo
 #        self.level = LevelButton(350)
         self.start = StartButton(520)
@@ -121,9 +121,9 @@ class LevelButton(object):
 
     def __init__(self, position, numberOfLevels = 1):
         nonHover = pygame.image.load(
-                          abspath("../data/images/nivel_normal.png") )
+                          abspath("data/images/nivel_normal.png") )
         hover = pygame.image.load(
-                           abspath("../data/images/nivel_hover.png") )
+                           abspath("data/images/nivel_hover.png") )
         self.img = [nonHover,hover]
         self.position = [600 - nonHover.get_width()/2, position]
         self.level = 0
@@ -151,9 +151,9 @@ class StartButton(object):
 
     def __init__(self, position):
         nonHover=pygame.image.load(
-                        abspath("../data/images/iniciar_normal.png") )
+                        abspath("data/images/iniciar_normal.png") )
         hover = pygame.image.load(
-                         abspath("../data/images/iniciar_hover.png") )
+                         abspath("data/images/iniciar_hover.png") )
         self.img = [nonHover,hover]
         self.position = [600 - nonHover.get_width()/2 - 50, position]
         self.current = 0

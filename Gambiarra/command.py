@@ -39,14 +39,14 @@ class Command(pygame.sprite.Sprite):
 class Play(Command):
     def __init__(self):
         super(Play, self).__init__( pygame.image.load(
-                          abspath("../data/images/playButton.png") ) )
+                          abspath("data/images/playButton.png") ) )
 
 class Help(Command):
     def __init__(self):
         super(Help, self).__init__( pygame.image.load(
-                          abspath("../data/images/helpButton.png") ) )
+                          abspath("data/images/helpButton.png") ) )
 
 class Quit(Command):
     def __init__(self):
         super(Quit, self).__init__( pygame.image.load(
-                          abspath("../data/images/quitButton.png") ) )
+                          abspath("data/images/quitButton.png") ) )

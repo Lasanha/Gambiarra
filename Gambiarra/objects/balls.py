@@ -28,33 +28,33 @@ from things import Thing
 class BowlingBall(Thing):
     def __init__(self, initialPosition=None, editable=True):
         if pygame.mixer.get_init():
-            snd = pygame.mixer.Sound(abspath("../data/snd/BowlingBall.wav"))
+            snd = pygame.mixer.Sound(abspath("data/snd/BowlingBall.wav"))
         else:
             snd = None
         super(BowlingBall, self).__init__(
-              pygame.image.load(abspath("../data/images/bolaBoliche.png")),
+              pygame.image.load(abspath("data/images/bolaBoliche.png")),
               editable, snd,
               initialPosition, elasticity = 60, mobility = True, gravity = 5)
 
 class BeachBall(Thing):
     def __init__(self, initialPosition=None, editable=True):
         if pygame.mixer.get_init():
-            snd = pygame.mixer.Sound(abspath("../data/snd/BowlingBall.wav"))
+            snd = pygame.mixer.Sound(abspath("data/snd/BowlingBall.wav"))
         else:
             snd = None
         super(BeachBall, self).__init__(
-              pygame.image.load(abspath("../data/images/bola.png")),
+              pygame.image.load(abspath("data/images/bola.png")),
               editable, snd,
               initialPosition, elasticity = 90, mobility = True, gravity = 5)
 
 class SoccerBall(Thing):
     def __init__(self, initialPosition=None, editable=True):
         if pygame.mixer.get_init():
-            snd = pygame.mixer.Sound(abspath("../data/snd/BowlingBall.wav"))
+            snd = pygame.mixer.Sound(abspath("data/snd/BowlingBall.wav"))
         else:
             snd = None
         super(SoccerBall, self).__init__(
-              pygame.image.load(abspath("../data/images/futebol.png")),
+              pygame.image.load(abspath("data/images/futebol.png")),
               editable, snd,
               initialPosition, elasticity = 70, mobility = True,
               gravity = 5)
