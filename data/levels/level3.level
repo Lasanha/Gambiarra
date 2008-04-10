@@ -1,0 +1,37 @@
+{
+  "id"       : "third level",
+  "placed"   : [
+                 {
+                   "type" : "BowlingBall",
+                   "name" : "boliche",
+                   "xpos" : "20",
+                   "ypos" : "20"
+                 },
+                 {
+                   "type" : "Esteira",
+                   "name" : "esteira",
+                   "xpos" : "10",
+                   "ypos" : "300"
+                 },
+                 {
+                   "type" : "Target",
+                   "name" : "alvo",
+                   "xpos" : "1100",
+                   "ypos" : "20"
+                 }
+               ],
+  "available": [
+                 {
+                   "type" : "Elastica",
+                   "name" : "elastica1"
+                 },
+                 {
+                   "type" : "Elastica",
+                   "name" : "elastica2"
+                 }
+               ],
+  "goals"    : [
+                 ["boliche", "alvo"]
+               ],
+  "help"     : "help3.png"
+}

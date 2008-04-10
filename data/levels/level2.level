@@ -1,0 +1,27 @@
+{
+  "id"       : "second level",
+  "placed"   : [
+                 {
+                   "type" : "Penguin",
+                   "name" : "tux",
+                   "xpos" : "300",
+                   "ypos" : "500"
+                 },
+                 {
+                   "type" : "Target",
+                   "name" : "alvo",
+                   "xpos" : "500",
+                   "ypos" : "600"
+                 }
+               ],
+  "available": [
+                 {
+                   "type" : "Esteira",
+                   "name" : "esteira"
+                 }
+               ],
+  "goals"    : [
+                 ["tux", "alvo"]
+               ],
+  "help"     : "help2.png"
+}

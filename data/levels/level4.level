@@ -1,0 +1,48 @@
+{
+  "id"       : "fourth level",
+  "placed"   : [
+                 {
+                   "type" : "BowlingBall",
+                   "name" : "boliche",
+                   "xpos" : "20",
+                   "ypos" : "20"
+                 },
+                 {
+                   "type" : "SoccerBall",
+                   "name" : "futebol",
+                   "xpos" : "800",
+                   "ypos" : "300"
+                 },
+                 {
+                   "type" : "Target",
+                   "name" : "alvo1",
+                   "xpos" : "900",
+                   "ypos" : "90"
+                 },
+                 {
+                   "type" : "Target",
+                   "name" : "alvo2",
+                   "xpos" : "100",
+                   "ypos" : "550"
+                 }
+               ],
+  "available": [
+                 {
+                   "type" : "Esteira",
+                   "name" : "esteira1"
+                 },
+                 {
+                   "type" : "Esteira",
+                   "name" : "esteira2"
+                 },
+                 {
+                   "type" : "Esteira",
+                   "name" : "esteira3"
+                 }
+               ],
+  "goals"    : [
+                 ["boliche", "alvo1"],
+                 ["futebol", "alvo2"]
+               ],
+  "help"     : "help4.png"
+}
