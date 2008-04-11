@@ -170,25 +170,25 @@ def load_levels():
     levels = []
     for level_file in sorted(f for f in files if f.split(".")[-1] == "level"):
         fp = open(os.path.join(level_dir, level_file))
-        l = json.load(fp)
+        level = json.load(fp)
         fp.close()
 
         objs = {}
-        for obj in l["placed"]:
-            o = globals()[obj["type"]]( ( int(obj["xpos"]), int(obj["ypos"]) ),
-                                        editable=False)
+        for obj in level["placed"]:
+            klass = globals()[obj["type"]]
+            o = klass( (int(obj["xpos"]), int(obj["ypos"])), editable=False)
             objs[obj["name"]] = o
 
         toadd = {}
-        for obj in l["available"]:
-            o = globals()[obj["type"]]()
-            toadd[obj["name"]] = o
+        for obj in level["available"]:
+            klass = globals()[obj["type"]]
+            toadd[obj["name"]] = klass()
 
         goals = []
-        for goal in l["goals"]:
+        for goal in level["goals"]:
             goals.append( (objs[ goal[0] ], objs[ goal[1] ]) )
 
-        help_image = pygame.image.load(os.path.join(level_dir, l["help"]))
+        help_image = pygame.image.load(os.path.join(level_dir, level["help"]))
 
         levels.append( Level(objs, toadd, goals, help_image) )
     return levels
