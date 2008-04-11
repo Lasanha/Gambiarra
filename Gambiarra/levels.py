@@ -26,12 +26,7 @@ import os
 
 import simplejson as json
 
-from objects.balls import *
-from objects.animals import *
-from objects.elastica import *
-from objects.esteira import *
-from objects.target import *
-from objects.wall import *
+from objects import *
 
 from command import *
 
