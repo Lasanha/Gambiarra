@@ -31,13 +31,7 @@ import levels as Levels
 from command import Play, Help, Quit
 from gamemenu import GameMenu
 
-from objects.animals import *
-from objects.elastica import Elastica
-from objects.esteira import Esteira
-from objects.target import Target
-from objects.wall import *
-
-from objects.things import check_collision
+from objects import Penguin, Esteira, check_collision
 
 class Game(object):
     # controle do jogo
