@@ -4,20 +4,20 @@
                  {
                    "type" : "SoccerBall",
                    "name" : "bola",
-                   "xpos" : "200",
-                   "ypos" : "300"
+                   "xpos" : 200,
+                   "ypos" : 300
                  },
                  {
                    "type" : "Esteira",
                    "name" : "rolante",
-                   "xpos" : "300",
-                   "ypos" : "500"
+                   "xpos" : 300,
+                   "ypos" : 500
                  },
                  {
                    "type" : "Target",
                    "name" : "alvo",
-                   "xpos" : "1000",
-                   "ypos" : "600"
+                   "xpos" : 1000,
+                   "ypos" : 600
                  }
                ],
   "available": [

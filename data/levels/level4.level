@@ -4,26 +4,26 @@
                  {
                    "type" : "BowlingBall",
                    "name" : "boliche",
-                   "xpos" : "20",
-                   "ypos" : "20"
+                   "xpos" : 20,
+                   "ypos" : 20
                  },
                  {
                    "type" : "SoccerBall",
                    "name" : "futebol",
-                   "xpos" : "800",
-                   "ypos" : "300"
+                   "xpos" : 800,
+                   "ypos" : 300
                  },
                  {
                    "type" : "Target",
                    "name" : "alvo1",
-                   "xpos" : "900",
-                   "ypos" : "90"
+                   "xpos" : 900,
+                   "ypos" : 90
                  },
                  {
                    "type" : "Target",
                    "name" : "alvo2",
-                   "xpos" : "100",
-                   "ypos" : "550"
+                   "xpos" : 100,
+                   "ypos" : 550
                  }
                ],
   "available": [

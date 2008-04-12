@@ -4,14 +4,14 @@
                  {
                    "type" : "Penguin",
                    "name" : "tux",
-                   "xpos" : "300",
-                   "ypos" : "500"
+                   "xpos" : 300,
+                   "ypos" : 500
                  },
                  {
                    "type" : "Target",
                    "name" : "alvo",
-                   "xpos" : "500",
-                   "ypos" : "600"
+                   "xpos" : 500,
+                   "ypos" : 600
                  }
                ],
   "available": [

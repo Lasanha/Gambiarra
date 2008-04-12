@@ -169,7 +169,7 @@ def load_levels():
         objs = {}
         for obj in level["placed"]:
             klass = globals()[obj["type"]]
-            o = klass( (int(obj["xpos"]), int(obj["ypos"])), editable=False)
+            o = klass( (obj["xpos"], obj["ypos"]), editable=False)
             objs[obj["name"]] = o
 
         toadd = {}

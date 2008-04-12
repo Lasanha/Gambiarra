@@ -4,20 +4,20 @@
                  {
                    "type" : "BowlingBall",
                    "name" : "boliche",
-                   "xpos" : "1000",
-                   "ypos" : "300"
+                   "xpos" : 1000,
+                   "ypos" : 300
                  },
                  {
                    "type" : "Esteira",
                    "name" : "esteira",
-                   "xpos" : "1000",
-                   "ypos" : "500"
+                   "xpos" : 1000,
+                   "ypos" : 500
                  },
                  {
                    "type" : "Target",
                    "name" : "alvo",
-                   "xpos" : "1100",
-                   "ypos" : "650"
+                   "xpos" : 1100,
+                   "ypos" : 650
                  }
                ],
   "available": [

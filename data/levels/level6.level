@@ -4,26 +4,26 @@
                  {
                    "type" : "BeachBall",
                    "name" : "praia",
-                   "xpos" : "800",
-                   "ypos" : "50"
+                   "xpos" : 800,
+                   "ypos" : 50
                  },
                  {
                    "type" : "Elastica",
                    "name" : "elastica1",
-                   "xpos" : "800",
-                   "ypos" : "400"
+                   "xpos" : 800,
+                   "ypos" : 400
                  },
                  {
                    "type" : "Elastica",
                    "name" : "elastica2",
-                   "xpos" : "900",
-                   "ypos" : "200"
+                   "xpos" : 900,
+                   "ypos" : 200
                  },
                  {
                    "type" : "Target",
                    "name" : "alvo",
-                   "xpos" : "1070",
-                   "ypos" : "650"
+                   "xpos" : 1070,
+                   "ypos" : 650
                  }
                ],
   "available": [
