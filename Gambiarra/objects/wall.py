@@ -27,9 +27,10 @@ from things import Thing
 
 class LeftWall(Thing):
     def __init__(self, initialPosition = [0,0], editable=False):
+        image = pygame.Surface( (15, 770) )
+        image.fill( (255,255,255) )
         super(LeftWall, self).__init__(
-           pygame.image.load(abspath("data/images/leftwall.png")),
-           editable, None,
+           image, editable, None,
            initialPosition, elasticity = 100, mobility = False,
            gravity = 10)
 
@@ -43,9 +44,10 @@ class LeftWall(Thing):
 
 class RightWall(Thing):
     def __init__(self, initialPosition = [1185,0], editable=False):
+        image = pygame.Surface( (15, 770) )
+        image.fill( (255,255,255) )
         super(RightWall, self).__init__(
-           pygame.image.load(abspath("data/images/rightwall.png")),
-           editable, None,
+           image, editable, None,
            initialPosition, elasticity = 100, mobility = False, gravity = 10)
 
     def collide(self, obj):
@@ -58,9 +60,10 @@ class RightWall(Thing):
 
 class UpWall(Thing):
     def __init__(self, initialPosition = [15,0], editable=False):
+        image = pygame.Surface( (1770, 15) )
+        image.fill( (255,255,255) )
         super(UpWall, self).__init__(
-            pygame.image.load(abspath("data/images/upwall.png")),
-            editable, None,
+            image, editable, None,
             initialPosition, elasticity = 100, mobility = False,
             gravity = 10)
 
@@ -74,9 +77,10 @@ class UpWall(Thing):
 
 class DownWall(Thing):
     def __init__(self, initialPosition = [15,755], editable=False):
+        image = pygame.Surface( (1770, 15) )
+        image.fill( (255,255,255) )
         super(DownWall, self).__init__(
-            pygame.image.load(abspath("data/images/downwall.png")),
-            editable, None,
+            image, editable, None,
             initialPosition, elasticity = 100, mobility = False,
             gravity = 10)
 
@@ -87,4 +91,3 @@ class DownWall(Thing):
             obj.speed[1] *= -0.75*obj.elasticity/100
             return True
         return False
-
