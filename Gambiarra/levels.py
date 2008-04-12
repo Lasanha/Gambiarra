@@ -30,13 +30,6 @@ from objects import *
 
 from command import *
 
-def _is_static(obj):
-    # FIXME: we need to define a way of saying that an object is static, this
-    # "if" is repulsive! =D
-    if (isinstance(obj, Target) or isinstance(obj, Esteira)
-        or isinstance(obj, Elastica)):
-        return True
-
 class SimulationView(object):
     """ This widget holds the objects being simulated. """
     running = None
@@ -51,10 +44,10 @@ class SimulationView(object):
         self.staticObjs = []
 
         for obj in objects.values():
-            if _is_static(obj):
-                self.staticObjs.append(obj)
-            else:
+            if obj.mobility:
                 obj.add(self.objects)
+            else:
+                self.staticObjs.append(obj)
 
         self.staticObjs.append(LeftWall())
         self.staticObjs.append(RightWall())
@@ -75,10 +68,10 @@ class SimulationView(object):
             item.draw(screen, item.rect.topleft)
 
     def add(self, obj):
-        if _is_static(obj):
-            self.staticObjs.append(obj)
-        else:
+        if obj.mobility:
             obj.add(self.objects)
+        else:
+            self.staticObjs.append(obj)
 
 class ObjectBar(object):
     """ This widget contains the objects available for the problem. """
