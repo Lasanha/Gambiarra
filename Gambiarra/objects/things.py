@@ -97,6 +97,16 @@ class Thing(pygame.sprite.Sprite):
             return True
         return False
 
+    def update(self):
+        if self.mobility:
+            newpos = self.rect.move((self.speed[0],self.speed[1]))
+            self.rect = newpos
+            self.speed[0] *= 0.99
+            if self.speed[1] <= self.rect[3]*0.04 and self.speed[1] > 0:
+                self.speed[1] = 0
+            else:
+                self.speed[1] += self.gravity
+
 def check_collision(sprite_list, wall_list):
     new_objects = pygame.sprite.RenderPlain()
     for obj in sprite_list:

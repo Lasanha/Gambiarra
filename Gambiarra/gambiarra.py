@@ -31,7 +31,7 @@ import levels as Levels
 from command import Play, Help, Quit
 from gamemenu import GameMenu
 
-from objects import Penguin, Esteira, check_collision
+from objects import Esteira, check_collision
 
 class Game(object):
     # controle do jogo
@@ -89,15 +89,7 @@ class Game(object):
                                 self.levels[self.level].simulator.staticObjs)
             self.levels[self.level].simulator.objects = objs
             for obj in self.levels[self.level].simulator.objects:
-                #obj eh um objeto na tela
-                if obj.mobility:
-                    newpos = obj.rect.move((obj.speed[0],obj.speed[1]))
-                    obj.rect = newpos
-                    if not(isinstance(obj,Penguin)):
-                        obj.speed[0] *= 0.99
-                    if obj.speed[1] <= obj.rect[3]*0.04 and obj.speed[1] > 0:
-                        obj.speed[1] = 0
-                    obj.speed[1] += obj.gravity
+                obj.update()
         else:
             if self.selected_element:
                 if self.selected_element.editable:
