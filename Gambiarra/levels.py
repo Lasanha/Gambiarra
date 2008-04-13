@@ -199,6 +199,7 @@ def load_level(level, level_dir, level_name):
             toadd[obj["name"]] = klass()
         except KeyError, e:
             print level_name, "-> Object name not available"
+            return None
 
     goals = []
     for goal in level["goals"]:
