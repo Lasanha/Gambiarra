@@ -19,8 +19,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
-from os.path import abspath
-
 import pygame
 
 from things import Thing
@@ -29,17 +27,15 @@ class Esteira(Thing):
 
     sentido = None
 
-    def __init__(self, initialPosition = [0,0], editable=True):
-        super(Esteira, self).__init__(
-              pygame.image.load(abspath("data/images/esteira_dir.png")),
+    def __init__(self, initial_pos = (0, 0), editable=True):
+        Thing.__init__(self,
+              pygame.image.load("data/images/esteira_dir.png"),
               editable, None,
-              initialPosition, elasticity = 100, mobility = False,
+              initial_pos, elasticity = 100, mobility = False,
               gravity = 10)
         self.sentido = 1
-        self.image_dir = pygame.image.load(
-                            abspath("data/images/esteira_dir.png"))
-        self.image_esq = pygame.image.load(
-                            abspath("data/images/esteira_esq.png"))
+        self.image_dir = pygame.image.load("data/images/esteira_dir.png")
+        self.image_esq = pygame.image.load("data/images/esteira_esq.png")
 
     def draw(self, screen, pos):
         # temos a imagem na variavel <img> e

@@ -19,18 +19,16 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
-from os.path import abspath
-
 import pygame
 
 from things import Thing
 
 class Target(Thing):
-    def __init__(self, initialPosition = [0,0], editable=True):
-        super(Target, self).__init__(
-              pygame.image.load(abspath("data/images/target.png")),
+    def __init__(self, initial_pos=None, editable=True):
+        Thing.__init__(self,
+              pygame.image.load("data/images/target.png"),
               editable, None,
-              initialPosition, elasticity = 100, mobility = False,
+              initial_pos, elasticity = 100, mobility = False,
               gravity = 10)
 
     def collide(self, obj):

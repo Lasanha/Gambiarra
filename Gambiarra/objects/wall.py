@@ -19,19 +19,17 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
-from os.path import abspath
-
 import pygame
 
 from things import Thing
 
 class LeftWall(Thing):
-    def __init__(self, initialPosition = [0,0], editable=False):
+    def __init__(self, initial_pos=(0, 0), editable=False):
         image = pygame.Surface( (15, 770) )
-        image.fill( (255,255,255) )
-        super(LeftWall, self).__init__(
+        image.fill( (255, 255, 255) )
+        Thing.__init__(self,
            image, editable, None,
-           initialPosition, elasticity = 100, mobility = False,
+           initial_pos, elasticity = 100, mobility = False,
            gravity = 10)
 
     def collide(self, obj):
@@ -43,12 +41,12 @@ class LeftWall(Thing):
         return False
 
 class RightWall(Thing):
-    def __init__(self, initialPosition = [1185,0], editable=False):
+    def __init__(self, initial_pos=(1185, 0), editable=False):
         image = pygame.Surface( (15, 770) )
-        image.fill( (255,255,255) )
-        super(RightWall, self).__init__(
+        image.fill( (255, 255, 255) )
+        Thing.__init__(self,
            image, editable, None,
-           initialPosition, elasticity = 100, mobility = False, gravity = 10)
+           initial_pos, elasticity = 100, mobility = False, gravity = 10)
 
     def collide(self, obj):
         if obj.rect.colliderect(self.rect):
@@ -59,12 +57,12 @@ class RightWall(Thing):
         return False
 
 class UpWall(Thing):
-    def __init__(self, initialPosition = [15,0], editable=False):
+    def __init__(self, initial_pos = (15, 0), editable=False):
         image = pygame.Surface( (1770, 15) )
-        image.fill( (255,255,255) )
-        super(UpWall, self).__init__(
+        image.fill( (255, 255, 255) )
+        Thing.__init__(self,
             image, editable, None,
-            initialPosition, elasticity = 100, mobility = False,
+            initial_pos, elasticity = 100, mobility = False,
             gravity = 10)
 
     def collide(self, obj):
@@ -76,12 +74,12 @@ class UpWall(Thing):
         return False
 
 class DownWall(Thing):
-    def __init__(self, initialPosition = [15,755], editable=False):
+    def __init__(self, initial_pos = (15, 755), editable=False):
         image = pygame.Surface( (1770, 15) )
-        image.fill( (255,255,255) )
-        super(DownWall, self).__init__(
+        image.fill( (255, 255, 255) )
+        Thing.__init__(self,
             image, editable, None,
-            initialPosition, elasticity = 100, mobility = False,
+            initial_pos, elasticity = 100, mobility = False,
             gravity = 10)
 
     def collide(self, obj):

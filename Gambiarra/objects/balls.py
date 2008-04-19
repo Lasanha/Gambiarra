@@ -19,42 +19,40 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
-from os.path import abspath
-
 import pygame
 
 from things import Thing
 
 class BowlingBall(Thing):
-    def __init__(self, initialPosition=None, editable=True):
+    def __init__(self, initial_pos=None, editable=True):
         if pygame.mixer.get_init():
-            snd = pygame.mixer.Sound(abspath("data/snd/BowlingBall.wav"))
+            snd = pygame.mixer.Sound("data/snd/BowlingBall.wav")
         else:
             snd = None
-        super(BowlingBall, self).__init__(
-              pygame.image.load(abspath("data/images/bolaBoliche.png")),
+        Thing.__init__(self,
+              pygame.image.load("data/images/bolaBoliche.png"),
               editable, snd,
-              initialPosition, elasticity = 60, mobility = True, gravity = 5)
+              initial_pos, elasticity = 60, mobility = True, gravity = 5)
 
 class BeachBall(Thing):
-    def __init__(self, initialPosition=None, editable=True):
+    def __init__(self, initial_pos=None, editable=True):
         if pygame.mixer.get_init():
-            snd = pygame.mixer.Sound(abspath("data/snd/BowlingBall.wav"))
+            snd = pygame.mixer.Sound("data/snd/BowlingBall.wav")
         else:
             snd = None
-        super(BeachBall, self).__init__(
-              pygame.image.load(abspath("data/images/bola.png")),
+        Thing.__init__(self,
+              pygame.image.load("data/images/bola.png"),
               editable, snd,
-              initialPosition, elasticity = 90, mobility = True, gravity = 5)
+              initial_pos, elasticity = 90, mobility = True, gravity = 5)
 
 class SoccerBall(Thing):
-    def __init__(self, initialPosition=None, editable=True):
+    def __init__(self, initial_pos=None, editable=True):
         if pygame.mixer.get_init():
-            snd = pygame.mixer.Sound(abspath("data/snd/BowlingBall.wav"))
+            snd = pygame.mixer.Sound("data/snd/BowlingBall.wav")
         else:
             snd = None
-        super(SoccerBall, self).__init__(
-              pygame.image.load(abspath("data/images/futebol.png")),
+        Thing.__init__(self,
+              pygame.image.load("data/images/futebol.png"),
               editable, snd,
-              initialPosition, elasticity = 70, mobility = True,
+              initial_pos, elasticity = 70, mobility = True,
               gravity = 5)

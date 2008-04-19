@@ -44,7 +44,7 @@ import pygame
 class Thing(pygame.sprite.Sprite):
 
     img = None
-    initialPosition = None
+    initial_pos = None
     mobility = None
     editable = None
     speed = None
@@ -52,15 +52,15 @@ class Thing(pygame.sprite.Sprite):
     snd = None
     elasticity = None # * 1%, from 0 up to 100
 
-    def __init__(self, image, editable, snd, initialPosition=None,
+    def __init__(self, image, editable, snd, initial_pos=None,
                  elasticity = 70, mobility = False, gravity = 5 ):
         pygame.sprite.Sprite.__init__(self) #call Sprite intializer
         self.image = image
         self.rect = image.get_rect()
 
-        if initialPosition:
-            self.initialPosition = initialPosition
-            self.rect.topleft = initialPosition[0], initialPosition[1]
+        if initial_pos:
+            self.initial_pos = initial_pos
+            self.rect.topleft = initial_pos[0], initial_pos[1]
         self.elasticity = elasticity
         self.editable = editable
         self.speed = [0,0]
