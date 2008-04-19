@@ -20,9 +20,6 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 import pygame
-from pygame.locals import *
-
-from os.path import abspath
 
 class GameMenu(object):
     screen = None
@@ -34,7 +31,8 @@ class GameMenu(object):
 #        pygame.init()
 #        pygame.display.set_mode((1280,800))
         self.screen = pygame.display.get_surface()
-        self.background = pygame.image.load(abspath("data/images/background.png"))
+        bg_file = "data/images/background.png"
+        self.background = pygame.image.load(bg_file)
         # mudar o arquivo de logotipo
 #        self.level = LevelButton(350)
         self.start = StartButton(520)
@@ -45,15 +43,14 @@ class GameMenu(object):
         self.start.draw(self.screen)
         pygame.display.flip()
         while (True):
-            pos = pygame.mouse.get_pos()
             event = self.event_handler()
-            if ( event == MOUSEMOTION ):
-                self.screen.fill((0,0,0))
-                self.screen.blit(self.background, (0,0))
+            if ( event == pygame.MOUSEMOTION ):
+                self.screen.fill((0, 0, 0))
+                self.screen.blit(self.background, (0, 0))
 #                self.level.draw(self.screen)
                 self.start.draw(self.screen)
                 pygame.display.flip()
-            if ( event == MOUSEBUTTONUP ) :
+            if ( event == pygame.MOUSEBUTTONUP ) :
                 if self.start.clicked:
                     return
 #                if self.level.clicked:
@@ -76,38 +73,40 @@ class GameMenu(object):
 #                                self.level.current = 0
 #                                self.level.current_img = self.level.img[0]
                             self.start.current = 1
-                            self.start.current_img = self.start.img[self.start.current]
-                            return MOUSEMOTION
-#                    elif self.level.current_img.get_rect(topleft = self.level.position).collidepoint(pygame.mouse.get_pos()):
+                            self.start.current_img = self.start.img[1]
+                            return pygame.MOUSEMOTION
+#                    img = self.level.current_img
+#                    rect = img.get_rect(topleft = self.level.position)
+#                    elif rect.collidepoint(pygame.mouse.get_pos()):
 #                        if self.level.current == 0 :
 #                            if self.start.current == 1:
 #                                self.start.current = 0
-#                                self.start.current_img = self.start.img[self.start.current]
+#                                self.start.current_img = self.start.img[0]
 #                            self.level.current = 1
-#                            self.level.current_img = self.level.img[self.level.current]
+#                            self.level.current_img = self.level.img[1]
 #                            return MOUSEMOTION
 #                    elif self.level.current == 1 or self.start.current == 1 :
                     elif self.start.current == 1 :
                         if self.start.current == 1 :
                             self.start.current = 0
-                            self.start.current_img = self.start.img[self.start.current]
+                            self.start.current_img = self.start.img[0]
 #                        else:
 #                            self.level.current = 0
-#                            self.level.current_img = self.level.img[self.level.current]
-                        return MOUSEMOTION
-                if event.type == MOUSEBUTTONUP:
+#                            self.level.current_img = self.level.img[0]
+                        return pygame.MOUSEMOTION
+                if event.type == pygame.MOUSEBUTTONUP:
                     if (self.start.current_img.get_rect(
                             topleft = self.start.position).collidepoint(
                                                         pygame.mouse.get_pos())
                         and self.start.current == 1):
                         self.start.click()
-                        return MOUSEBUTTONUP
+                        return pygame.MOUSEBUTTONUP
 #                    elif (self.level.current_img.get_rect(
 #                            topleft = self.level.position).collidepoint(
 #                                                        pygame.mouse.get_pos())
 #                        and self.level.current == 1):
 #                        self.level.click()
-#                        return MOUSEBUTTONUP
+#                        return pygame.MOUSEBUTTONUP
 
 
 class LevelButton(object):
@@ -121,9 +120,9 @@ class LevelButton(object):
     clicked = None
 
     def __init__(self, position, levels_number = 1):
-        img = abspath("data/images/nivel_normal.png")
+        img = "data/images/nivel_normal.png"
         non_hover = pygame.image.load(img)
-        img = abspath("data/images/nivel_hover.png")
+        img = "data/images/nivel_hover.png"
         hover = pygame.image.load(img)
         self.img = [non_hover, hover]
         self.position = [600 - non_hover.get_width()/2, position]
@@ -151,9 +150,9 @@ class StartButton(object):
     clicked = None
 
     def __init__(self, position):
-        img = abspath("data/images/iniciar_normal.png")
+        img = "data/images/iniciar_normal.png"
         non_hover = pygame.image.load(img)
-        img = abspath("data/images/iniciar_hover.png")
+        img = "data/images/iniciar_hover.png"
         hover = pygame.image.load(img)
         self.img = [non_hover, hover]
         self.position = [600 - non_hover.get_width()/2 - 50, position]

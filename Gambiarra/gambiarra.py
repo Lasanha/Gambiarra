@@ -20,13 +20,9 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
-import os
 import sys
-from os.path import abspath
 
 import pygame
-from pygame.locals import *
-import levels as Levels
 
 from Gambiarra.command import Play, Help, Quit
 from Gambiarra.gamemenu import GameMenu
@@ -68,7 +64,8 @@ class Game(object):
         self.menu = GameMenu()
         self.congrats = pygame.image.load("data/images/fim_fase.png")
         if self.play_sounds:
-            self.congratsSnd = pygame.mixer.Sound(abspath("data/snd/Congrats.wav"))
+            snd_file = "data/snd/Congrats.wav"
+            self.congrats_snd = pygame.mixer.Sound(snd_file)
         self._showed_help = False
         self.count = 0
 
@@ -78,7 +75,7 @@ class Game(object):
 
     def event_handler(self):
         for event in pygame.event.get():
-            if event.type == MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN:
                 self.mouse_event( pygame.mouse.get_pos() )
 
     def update_screen(self, fps):
@@ -165,7 +162,7 @@ class Game(object):
 
         while True:
             for event in pygame.event.get():
-                if event.type == MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONDOWN:
                     return
 
     def main_loop(self):

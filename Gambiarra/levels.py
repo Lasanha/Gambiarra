@@ -20,7 +20,6 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 import pygame
-from pygame.locals import *
 
 import os
 
@@ -151,7 +150,7 @@ class Level(object):
         pygame.display.flip()
         while True:
             for event in pygame.event.get():
-                if event.type == MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONDOWN:
                     return
 
 def init_levels():
