@@ -19,6 +19,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
+import os.path
+
 import pygame
 
 from things import Thing
@@ -26,33 +28,37 @@ from things import Thing
 class BowlingBall(Thing):
     def __init__(self, initial_pos=None, editable=True):
         if pygame.mixer.get_init():
-            snd = pygame.mixer.Sound("data/snd/BowlingBall.wav")
+            snd = pygame.mixer.Sound(os.path.join("data", "snd",
+                                                  "BowlingBall.wav"))
         else:
             snd = None
         Thing.__init__(self,
-              pygame.image.load("data/images/bolaBoliche.png"),
+              pygame.image.load(os.path.join("data", "images",
+                                             "bolaBoliche.png")),
               editable, snd,
               initial_pos, elasticity = 60, mobility = True, gravity = 5)
 
 class BeachBall(Thing):
     def __init__(self, initial_pos=None, editable=True):
         if pygame.mixer.get_init():
-            snd = pygame.mixer.Sound("data/snd/BowlingBall.wav")
+            snd = pygame.mixer.Sound(os.path.join("data", "snd",
+                                                  "BowlingBall.wav"))
         else:
             snd = None
         Thing.__init__(self,
-              pygame.image.load("data/images/bola.png"),
+              pygame.image.load(os.path.join("data", "images", "bola.png")),
               editable, snd,
               initial_pos, elasticity = 90, mobility = True, gravity = 5)
 
 class SoccerBall(Thing):
     def __init__(self, initial_pos=None, editable=True):
         if pygame.mixer.get_init():
-            snd = pygame.mixer.Sound("data/snd/BowlingBall.wav")
+            snd = pygame.mixer.Sound(os.path.join("data", "snd",
+                                                  "BowlingBall.wav"))
         else:
             snd = None
         Thing.__init__(self,
-              pygame.image.load("data/images/futebol.png"),
+              pygame.image.load(os.path.join("data", "images", "futebol.png")),
               editable, snd,
               initial_pos, elasticity = 70, mobility = True,
               gravity = 5)

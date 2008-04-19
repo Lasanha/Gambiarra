@@ -19,6 +19,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
+import os.path
+
 import pygame
 
 from things import Thing
@@ -26,7 +28,7 @@ from things import Thing
 class Target(Thing):
     def __init__(self, initial_pos=None, editable=True):
         Thing.__init__(self,
-              pygame.image.load("data/images/target.png"),
+              pygame.image.load(os.path.join("data", "images", "target.png")),
               editable, None,
               initial_pos, elasticity = 100, mobility = False,
               gravity = 10)

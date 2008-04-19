@@ -19,6 +19,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
+import os.path
+
 import pygame
 
 class Command(pygame.sprite.Sprite):
@@ -37,14 +39,17 @@ class Command(pygame.sprite.Sprite):
 class Play(Command):
     def __init__(self):
         Command.__init__(self,
-                         pygame.image.load("data/images/playButton.png") )
+                         pygame.image.load(os.path.join("data", "images",
+                                                        "playButton.png")) )
 
 class Help(Command):
     def __init__(self):
         Command.__init__(self,
-                         pygame.image.load("data/images/helpButton.png") )
+                         pygame.image.load(os.path.join("data", "images",
+                                                        "helpButton.png")) )
 
 class Quit(Command):
     def __init__(self):
         Command.__init__(self,
-                         pygame.image.load("data/images/quitButton.png") )
+                         pygame.image.load(os.path.join("data", "images",
+                                                        "quitButton.png")) )

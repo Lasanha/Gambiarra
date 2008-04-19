@@ -19,6 +19,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
+import os.path
+
 import pygame
 
 from things import Thing
@@ -27,11 +29,13 @@ class Elastica(Thing):
 
     def __init__(self, initial_pos = None, editable=True):
         if pygame.mixer.get_init():
-            snd = pygame.mixer.Sound("data/snd/cama_elastica.wav")
+            snd = pygame.mixer.Sound(os.path.join("data", "snd",
+                                                  "cama_elastica.wav"))
         else:
             snd = None
         Thing.__init__(self,
-              pygame.image.load("data/images/cama_elastica.png"),
+              pygame.image.load(os.path.join("data", "images",
+                                             "cama_elastica.png")),
               editable, snd,
               initial_pos, elasticity = 100, mobility = False,
               gravity = 10)

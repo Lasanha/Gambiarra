@@ -21,6 +21,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 import sys
+import os.path
 
 import pygame
 
@@ -62,9 +63,10 @@ class Game(object):
         self.clock = pygame.time.Clock()
         self.levels = Levels.init_levels()
         self.menu = GameMenu()
-        self.congrats = pygame.image.load("data/images/fim_fase.png")
+        self.congrats = pygame.image.load(os.path.join("data","images",
+                                                       "fim_fase.png"))
         if self.play_sounds:
-            snd_file = "data/snd/Congrats.wav"
+            snd_file = os.path.join("data", "snd", "Congrats.wav")
             self.congrats_snd = pygame.mixer.Sound(snd_file)
         self._showed_help = False
         self.count = 0

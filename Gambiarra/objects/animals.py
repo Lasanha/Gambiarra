@@ -19,6 +19,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
+import os.path
+
 import pygame
 
 from things import Thing
@@ -26,11 +28,12 @@ from things import Thing
 class Penguin(Thing):
     def __init__(self, initial_pos=None, editable=True):
         if pygame.mixer.get_init():
-            snd = pygame.mixer.Sound("data/snd/penguin.wav")
+            snd = pygame.mixer.Sound(os.path.join("data", "snd",
+                                                  "penguin.wav"))
         else:
             snd = None
         Thing.__init__(self,
-             pygame.image.load("data/images/penguin.png"),
+             pygame.image.load(os.path.join("data", "images", "penguin.png")),
              editable, snd,
              initial_pos, elasticity = 100, mobility = True,
              gravity = 5)

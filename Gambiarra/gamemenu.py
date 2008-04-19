@@ -19,6 +19,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
+import os.path
+
 import pygame
 
 class GameMenu(object):
@@ -31,7 +33,7 @@ class GameMenu(object):
 #        pygame.init()
 #        pygame.display.set_mode((1280,800))
         self.screen = pygame.display.get_surface()
-        bg_file = "data/images/background.png"
+        bg_file = os.path.join("data", "images", "background.png")
         self.background = pygame.image.load(bg_file)
         # mudar o arquivo de logotipo
 #        self.level = LevelButton(350)
@@ -120,9 +122,9 @@ class LevelButton(object):
     clicked = None
 
     def __init__(self, position, levels_number = 1):
-        img = "data/images/nivel_normal.png"
+        img = os.path.join("data", "images", "nivel_normal.png")
         non_hover = pygame.image.load(img)
-        img = "data/images/nivel_hover.png"
+        img = os.path.join("data", "images", "nivel_hover.png")
         hover = pygame.image.load(img)
         self.img = [non_hover, hover]
         self.position = [600 - non_hover.get_width()/2, position]
@@ -150,9 +152,9 @@ class StartButton(object):
     clicked = None
 
     def __init__(self, position):
-        img = "data/images/iniciar_normal.png"
+        img = os.path.join("data", "images", "iniciar_normal.png")
         non_hover = pygame.image.load(img)
-        img = "data/images/iniciar_hover.png"
+        img = os.path.join("data", "images", "iniciar_hover.png")
         hover = pygame.image.load(img)
         self.img = [non_hover, hover]
         self.position = [600 - non_hover.get_width()/2 - 50, position]
