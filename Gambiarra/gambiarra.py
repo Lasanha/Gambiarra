@@ -28,10 +28,11 @@ import pygame
 from pygame.locals import *
 import levels as Levels
 
-from command import Play, Help, Quit
-from gamemenu import GameMenu
+from Gambiarra.command import Play, Help, Quit
+from Gambiarra.gamemenu import GameMenu
+import Gambiarra.levels as Levels
 
-from objects import Esteira, check_collision
+from Gambiarra.objects import Esteira, check_collision
 
 class Game(object):
     # controle do jogo

@@ -1,10 +1,10 @@
-from animals import Penguin
-from balls import SoccerBall, BowlingBall, BeachBall
-from elastica import Elastica
-from esteira import Esteira
-from target import Target
-from things import Thing, check_collision
-from wall import UpWall, DownWall, LeftWall, RightWall
+from Gambiarra.objects.animals import Penguin
+from Gambiarra.objects.balls import SoccerBall, BowlingBall, BeachBall
+from Gambiarra.objects.elastica import Elastica
+from Gambiarra.objects.esteira import Esteira
+from Gambiarra.objects.target import Target
+from Gambiarra.objects.things import Thing, check_collision
+from Gambiarra.objects.wall import UpWall, DownWall, LeftWall, RightWall
 
 # namespace cleanup
 del animals

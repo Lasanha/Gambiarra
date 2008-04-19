@@ -26,9 +26,9 @@ import os
 
 import simplejson as json
 
-from objects import *
+from Gambiarra.objects import *
 
-from command import *
+from Gambiarra.command import Play, Help, Quit
 
 class SimulationView(object):
     """ This widget holds the objects being simulated. """
