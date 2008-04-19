@@ -1,4 +1,16 @@
-Hi! If you wanna run this game outside a XO, just enter in the Gambiarra
-directory and run gambiarra.py . Something like this:
-$ cd Gambiarra
+Hi! If you wanna run this game outside a XO, just run gambiarra.py .
+Like this:
 $ python gambiarra.py
+
+If you have a XO and wanna install the activity, there are two ways:
+- Inside the XO, run
+$ python setup.py dist
+$ sugar-install-bundle Gambiarra-1.xo
+- Outside the XO, you need to run sugar-jhbuild:
+$ ./sugar-jhbuild shell
+Go to the Gambiarra dir
+$ python setup.py dist
+and then copy it to the XO, and run
+$ sugar-install-bundle Gambiarra-1.xo
+
+Have fun!
