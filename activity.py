@@ -19,12 +19,20 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
-import olpcgames
+import sys
+import os.path
+
+# add the libs subdir to the path
+basedir = os.path.abspath(os.curdir)
+libdir = os.path.join(basedir, "libs")
+
+sys.path.insert(0, libdir)
 
 import logging
 
-class GambiarraActivity(olpcgames.PyGameActivity):
-    print "iniciou atividade"
-    game_name = 'Gambiarra.gambiarra:main'
+from olpcgames import activity
+
+class GambiarraActivity(activity.PyGameActivity):
+    game_name = 'gambiarra:main'
     game_title = "Gambiarra"
     game_size = (1200, 900)

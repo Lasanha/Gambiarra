@@ -79,7 +79,7 @@ libs/olpcgames/util.py
 libs/olpcgames/video.py
 
 COPYING
-GambiarraActivity.py
+activity.py
 gambiarra.py
 MANIFEST
 NEWS
