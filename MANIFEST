@@ -67,15 +67,23 @@ libs/simplejson/encoder.py
 libs/simplejson/scanner.py
 
 libs/olpcgames/activity.py
+libs/olpcgames/buildmanifest.py
+libs/olpcgames/_cairoimage.py
 libs/olpcgames/camera.py
 libs/olpcgames/canvas.py
+libs/olpcgames/dbusproxy.py
 libs/olpcgames/eventwrap.py
 libs/olpcgames/gtkEvent.py
+libs/olpcgames/_gtkmain.py
 libs/olpcgames/__init__.py
 libs/olpcgames/mesh.py
 libs/olpcgames/pangofont.py
+libs/olpcgames/pausescreen.py
+libs/olpcgames/svgsprite.py
+libs/olpcgames/textsprite.py
 libs/olpcgames/tubeconn.py
 libs/olpcgames/util.py
+libs/olpcgames/_version.py
 libs/olpcgames/video.py
 
 COPYING
