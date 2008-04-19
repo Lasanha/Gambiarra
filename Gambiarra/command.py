@@ -32,7 +32,7 @@ class Command(pygame.sprite.Sprite):
     def draw(self, screen, pos):
         # temos a imagem na variavel <img> e
         # o 'zero' (ponto onde deve ser desenhado <pos>
-        screen.blit(self.image, (pos[0],pos[1]))
+        screen.blit(self.image, (pos[0], pos[1]))
 
 class Play(Command):
     def __init__(self):

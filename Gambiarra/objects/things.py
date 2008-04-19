@@ -63,7 +63,7 @@ class Thing(pygame.sprite.Sprite):
             self.rect.topleft = initial_pos[0], initial_pos[1]
         self.elasticity = elasticity
         self.editable = editable
-        self.speed = [0,0]
+        self.speed = [0, 0]
         self.mobility = mobility
         self.gravity = gravity
         self.snd = snd
@@ -71,7 +71,7 @@ class Thing(pygame.sprite.Sprite):
     def draw(self, screen, pos ):
         # temos a imagem na variavel <img> e
         # o 'zero' (ponto onde deve ser desenhado <pos>
-        screen.blit(self.image, (pos[0],pos[1]))
+        screen.blit(self.image, (pos[0], pos[1]))
 
     def play(self):
         if self.snd and pygame.mixer.get_init():
@@ -80,7 +80,7 @@ class Thing(pygame.sprite.Sprite):
     def collide(self, obj):
         ''' Very basic implementation of elastic collision'''
         #TODO: verify mobility attribute
-        hitbox = self.rect.inflate(5,5)
+        hitbox = self.rect.inflate(5, 5)
         if hitbox.colliderect(obj.rect):
             if self.rect.left < obj.rect.right:
                 self.speed[0], obj.speed[0] = obj.speed[0], self.speed[0]
@@ -99,7 +99,7 @@ class Thing(pygame.sprite.Sprite):
 
     def update(self):
         if self.mobility:
-            newpos = self.rect.move((self.speed[0],self.speed[1]))
+            newpos = self.rect.move((self.speed[0], self.speed[1]))
             self.rect = newpos
             self.speed[0] *= 0.99
             if self.speed[1] <= self.rect[3]*0.04 and self.speed[1] > 0:
@@ -118,10 +118,10 @@ def check_collision(sprite_list, wall_list):
 #                obj.play()
 #                s.play()
 
-        for w in wall_list:
-            if w.collide(obj):
+        for wall in wall_list:
+            if wall.collide(obj):
                 obj.play()
-                w.play()
+                wall.play()
 
     return new_objects
 

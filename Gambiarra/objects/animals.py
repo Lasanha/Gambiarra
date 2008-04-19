@@ -34,4 +34,4 @@ class Penguin(Thing):
              editable, snd,
              initial_pos, elasticity = 100, mobility = True,
              gravity = 5)
-        self.speed=[5,0]
+        self.speed = [5, 0]

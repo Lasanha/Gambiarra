@@ -40,7 +40,7 @@ class GameMenu(object):
         self.start = StartButton(520)
 
     def run(self):
-        self.screen.blit(self.background, (0,0))
+        self.screen.blit(self.background, (0, 0))
 #        self.level.draw(self.screen)
         self.start.draw(self.screen)
         pygame.display.flip()
@@ -65,15 +65,16 @@ class GameMenu(object):
 #                    self.level.clicked = False
 
     def event_handler(self):
-        validEventFound = False
         while True:
             for event in pygame.event.get():
-                if event.type == MOUSEMOTION:
-                    if self.start.current_img.get_rect(topleft = self.start.position).collidepoint(pygame.mouse.get_pos()):
+                if event.type == pygame.MOUSEMOTION:
+                    img = self.start.current_img
+                    rect = img.get_rect(topleft = self.start.position)
+                    if rect.collidepoint(pygame.mouse.get_pos()):
                         if self.start.current == 0 :
 #                            if self.level.current == 1:
 #                                self.level.current = 0
-#                                self.level.current_img = self.level.img[self.level.current]
+#                                self.level.current_img = self.level.img[0]
                             self.start.current = 1
                             self.start.current_img = self.start.img[self.start.current]
                             return MOUSEMOTION
@@ -115,21 +116,21 @@ class LevelButton(object):
     level = None
     current = None
     current_img = None
-    numberOfLevels = None
+    levels_number = None
     current_level_img = None
     clicked = None
 
-    def __init__(self, position, numberOfLevels = 1):
-        nonHover = pygame.image.load(
-                          abspath("data/images/nivel_normal.png") )
-        hover = pygame.image.load(
-                           abspath("data/images/nivel_hover.png") )
-        self.img = [nonHover,hover]
-        self.position = [600 - nonHover.get_width()/2, position]
+    def __init__(self, position, levels_number = 1):
+        img = abspath("data/images/nivel_normal.png")
+        non_hover = pygame.image.load(img)
+        img = abspath("data/images/nivel_hover.png")
+        hover = pygame.image.load(img)
+        self.img = [non_hover, hover]
+        self.position = [600 - non_hover.get_width()/2, position]
         self.level = 0
         self.current = 0
         self.current_img = self.img[self.current]
-        self.numberOfLevels = numberOfLevels
+        self.levels_number = levels_number
         self.current_level_img = None # Precisa 'renderizar' o numero do nivel
         self.clicked = False
 
@@ -139,7 +140,7 @@ class LevelButton(object):
     def click(self):
         self.clicked = True
         self.level += 1
-        if self.level == self.numberOfLevels :
+        if self.level == self.levels_number :
             self.level = 0
 
 class StartButton(object):
@@ -150,12 +151,12 @@ class StartButton(object):
     clicked = None
 
     def __init__(self, position):
-        nonHover=pygame.image.load(
-                        abspath("data/images/iniciar_normal.png") )
-        hover = pygame.image.load(
-                         abspath("data/images/iniciar_hover.png") )
-        self.img = [nonHover,hover]
-        self.position = [600 - nonHover.get_width()/2 - 50, position]
+        img = abspath("data/images/iniciar_normal.png")
+        non_hover = pygame.image.load(img)
+        img = abspath("data/images/iniciar_hover.png")
+        hover = pygame.image.load(img)
+        self.img = [non_hover, hover]
+        self.position = [600 - non_hover.get_width()/2 - 50, position]
         self.current = 0
         self.current_img = self.img[self.current]
         self.clicked = False

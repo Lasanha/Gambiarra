@@ -51,14 +51,14 @@ class Game(object):
     screen = None
     menu = None
     congrats = None
-    congratsSnd = None
+    congrats_snd = None
 
     def __init__(self, play_sounds=True):
         pygame.init()
         self.play_sounds = play_sounds
         if self.play_sounds:
             pygame.mixer.init()
-        self.screen = pygame.display.set_mode((1200,900)) #omitindo flags
+        self.screen = pygame.display.set_mode((1200, 900)) #omitindo flags
         pygame.display.flip()
         self.running = True
         self.playing = False
@@ -87,7 +87,7 @@ class Game(object):
 
             # executa a simulacao
             objs = check_collision(self.levels[self.level].simulator.objects,
-                                self.levels[self.level].simulator.staticObjs)
+                                self.levels[self.level].simulator.static_objs)
             self.levels[self.level].simulator.objects = objs
             for obj in self.levels[self.level].simulator.objects:
                 obj.update()
@@ -96,35 +96,31 @@ class Game(object):
                 if self.selected_element.editable:
                     self.selected_element.rect.center = pygame.mouse.get_pos()
 
-    def mouse_event(self, mousePos):
+    def mouse_event(self, mouse_pos):
         if not self.selected_element:
-            collided = False
-            mouseMove = (0,0)
-            mouseMove = pygame.mouse.get_rel()
+            mouse_move = (0, 0)
+            mouse_move = pygame.mouse.get_rel()
 
             for element in self.levels[self.level].simulator.objects:
-                if element.rect.collidepoint(mousePos):
-                    collided = True
+                if element.rect.collidepoint(mouse_pos):
                     self.selected_element = element
                     break
 
             if not self.selected_element:
-                for element in self.levels[self.level].simulator.staticObjs:
-                    if element.rect.collidepoint(mousePos):
-                        collided = True
+                for element in self.levels[self.level].simulator.static_objs:
+                    if element.rect.collidepoint(mouse_pos):
                         self.selected_element = element
 
-                        if isinstance(element,Esteira) and element.editable:
+                        if isinstance(element, Esteira) and element.editable:
                             self.count += 1
                         if self.count == 1:
-                            element.sentido=-element.sentido
+                            element.sentido = -element.sentido
                             self.count = 0
                         break
 
             if not self.selected_element: #se nao encontrou no for anterior
                 for element in self.levels[self.level].objbar.objects:
-                    if element.rect.collidepoint(mousePos):
-                        collided = True
+                    if element.rect.collidepoint(mouse_pos):
                         element.remove(self.levels[self.level].objbar.objects)
                         self.levels[self.level].simulator.add(element)
                         self.selected_element = element
@@ -132,15 +128,16 @@ class Game(object):
 
             if not self.selected_element: #se nao encontrou no for anterior
                 for element in self.levels[self.level].cmdbar.commands:
-                    if element.rect.collidepoint(mousePos):
+                    if element.rect.collidepoint(mouse_pos):
                         if isinstance(element, Play):
                             element.image = pygame.transform.flip(element.image,
                                                                   True, False)
                             self.playing = not self.playing
                             if not self.playing:
-                                for element in self.levels[self.level].simulator.objects:
-                                    element.speed = [0,0]
-                                    element.rect.topleft = element.initialPosition
+                                objs = self.levels[self.level].simulator.objects
+                                for obj in objs:
+                                    obj.speed = [0, 0]
+                                    obj.rect.topleft = obj.initial_pos
                         elif isinstance(element, Help):
                             self.levels[self.level].show_help(self.screen)
                         elif isinstance(element, Quit):
@@ -149,18 +146,18 @@ class Game(object):
 
         else:
             if self.selected_element.editable and not self.playing:
-                mouseMove = pygame.mouse.get_rel()
-                if mouseMove != (0,0):
+                mouse_move = pygame.mouse.get_rel()
+                if mouse_move != (0, 0):
                     self.count -= 1
                 self.selected_element.rect.center = pygame.mouse.get_pos()
-                #self.selected_element.rect = self.selected_element.rect.move(mouseMove)
-                self.selected_element.initialPosition = self.selected_element.rect.topleft
+                new_pos = self.selected_element.rect.topleft
+                self.selected_element.initial_pos = new_pos
             self.selected_element = None
 
     def show_congratulations(self):
         if self.play_sounds:
             pygame.mixer.stop()
-            self.congratsSnd.play()
+            self.congrats_snd.play()
 
         self.screen.blit(self.congrats, (600 - self.congrats.get_width()/2,
                                          450 - self.congrats.get_height()/2) )

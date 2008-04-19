@@ -41,9 +41,9 @@ class Esteira(Thing):
         # temos a imagem na variavel <img> e
         # o 'zero' (ponto onde deve ser desenhado <pos>
         if self.sentido == 1:
-            screen.blit(self.image_dir, (pos[0],pos[1]))
+            screen.blit(self.image_dir, (pos[0], pos[1]))
         elif self.sentido == -1:
-            screen.blit(self.image_esq, (pos[0],pos[1]))
+            screen.blit(self.image_esq, (pos[0], pos[1]))
 
     def collide(self, obj):
         if obj.rect.colliderect(self.rect):
