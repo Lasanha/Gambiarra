@@ -20,6 +20,16 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
+import sys
+import os.path
+
+# add the libs subdir to the path
+basedir = os.path.abspath(os.curdir)
+libdir = os.path.join(basedir, "libs")
+
+if not libdir in sys.path:
+    sys.path.insert(0, libdir)
+
 from Gambiarra.gambiarra import Game
 
 def main():
