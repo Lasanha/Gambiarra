@@ -22,6 +22,7 @@
 
 import sys
 import os.path
+from optparse import OptionParser
 
 # add the libs subdir to the path
 basedir = os.path.abspath(os.curdir)
@@ -32,9 +33,22 @@ if not libdir in sys.path:
 
 from Gambiarra.gambiarra import Game
 
-def main():
-    game = Game()
+def main(play_sounds):
+    game = Game(play_sounds)
     game.run()
 
 if __name__ == "__main__":
-    main()
+    parser = OptionParser()
+    parser.add_option('-p', '--profile', action='store_true',
+        dest='profile', default=False,
+        help='run in profiling mode [default: %default]')
+    parser.add_option('-s', '--no-sound', action='store_true',
+        dest='sound', default=False,
+        help='disable sounds [default: %default]')
+    options, args = parser.parse_args()
+
+    if options.profile:
+        import cProfile
+        cProfile.run('main()', filename='gambiarra.cprof')
+    else:
+        main(options.sound)
